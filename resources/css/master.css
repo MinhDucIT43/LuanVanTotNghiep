@@ -1,0 +1,46 @@
+/* CSS của phần Header */
+#header{
+    height: 40px;
+    width: 85%;
+    float: right;
+    display: inline;
+    border-bottom: 4px solid;
+}
+#clock{
+    margin: 0.4em 0 0 0.5em;
+}
+#personLogin{
+    float: right;
+    margin: 0.4em 0.5em;
+}
+#btn-logout{
+    float: right;
+}
+
+/* CSS của phần Menu */
+#menu{
+    height: 650px;
+    width: 15%;
+    float: left;
+    background-color: #caf0f8;
+}
+.nav-link{
+    width: 200px;
+}
+
+/* CSS của phần Content */
+#content{
+    height: 610px;
+    width: 85%;
+    float: right;
+    display: flex;    
+}
+#contentPosition{
+    width: 100%;
+}
+.title-assignment{
+    text-align: center;
+}
+.addPosition{
+    float: right;
+}
