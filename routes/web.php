@@ -27,14 +27,14 @@ Route::get('logout', [AuthController::class, 'logout'])->name('auth.logout');
 /*Change Password*/
 Route::get('resetpassword', [RepassController::class, 'getResetPassword'])->name('repass.getResetPassword');
 Route::post('resetpassword', [RepassController::class, 'postResetPassword'])->name('repass.postResetPassword');
-// Route::group(['middleware' => 'CheckPhoneToEnterCodeForChangePassword'], function () {
+Route::group(['middleware' => 'CheckPhoneToEnterCodeForChangePassword'], function () {
     /*-------*/
     Route::get('code', [RepassController::class, 'getCode'])->name('repass.getCode');
     Route::post('code', [RepassController::class, 'postCode'])->name('repass.postCode');
     /*-------*/
     Route::get('changepass', [RepassController::class, 'getChangePass'])->name('repass.getChangePass');
     Route::post('changepass', [RepassController::class, 'postChangePass'])->name('repass.postChangePass');
-// });
+});
 
 Route::group(['middleware' => 'prevent-back-history'], function () {
     Route::group(['middleware' => 'CheckLogin'], function () {
