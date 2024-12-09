@@ -9,10 +9,6 @@
 #clock{
     margin: 0.4em 0 0 0.5em;
 }
-#personLogin{
-    float: right;
-    margin: 0.4em 0.5em;
-}
 #btn-logout{
     float: right;
 }
@@ -23,6 +19,12 @@
     width: 15%;
     float: left;
     background-color: #caf0f8;
+}
+#link-home{
+    text-decoration: none;
+}
+#logo-admin{
+    height:5em;
 }
 .nav-link{
     width: 200px;

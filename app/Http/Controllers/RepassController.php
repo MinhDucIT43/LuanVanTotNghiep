@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CodeRequest;
-use App\Http\Requests\RepassRequest;
 use App\Http\Requests\ChangePassRequest;
 
 use App\Models\staffs;
@@ -20,34 +19,6 @@ class RepassController extends Controller
     {
         return view('resetpassword.inputPhoneNumberAndReceiveCode');
     }
-
-    // public function postResetPassword(RepassRequest $request)
-    // {
-    //     $checkPhone = staffs::where('phone', $request->phone)->exists();
-    //     $request->session()->put('changePassPhone', $request->phone);
-    //     if ($checkPhone) {
-    //     // $code = random_int(000000, 999999);
-    //     // DB::table('codephones')->insert([
-    //     //     'code' => $code,
-    //     //     'created_at' => Carbon::now('Asia/Ho_Chi_Minh')->addMinutes(10),
-    //     //     'updated_at' => Carbon::now('Asia/Ho_Chi_Minh'),
-    //     // ]);
-    //     // $getStaffCode = staffs::where('phone',$request->phone)->first();
-    //     // $codephone_code  = codephones::where('code',$code)->first();
-    //     // DB::table('staffs_codephones')->insert([
-    //     //     'staff_code' => $getStaffCode->staff_code,
-    //     //     'codephone_code' => $codephone_code->codephone_code,
-    //     // ]);
-    //         return redirect()->route('repass.getCode');
-    //     } else {
-    //         return redirect()->back()->with('error', 'Số điện thoại không đúng.');
-    //     }
-    // }
-
-    // public function getCode()
-    // {
-    //     return view('resetpassword.inputcode');
-    // }
 
     public function verify(CodeRequest $request)
     {

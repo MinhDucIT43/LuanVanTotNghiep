@@ -24,7 +24,6 @@
             <div id="btn-logout">
                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-power-off"></i></button>
             </div>
-            <div id="personLogin"><strong>{{ auth()->guard('staffs')->user()->fullName }}</strong></div>
             <div id="clock"></div>
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -42,8 +41,15 @@
             </div>
         </div>
         <div id="menu">
+            <div id="inf-admin" style="text-align:center">
+                <a id="link-home" href="{{ route('manager.index') }}">
+                    <img src="{{asset('resources/images/manager/logo-admin.png')}}" id="logo-admin" alt="Logo Admin">
+                    <i class="fas fa-circle fa-lg" style="color: #1eff00;"></i>
+                    <br/>
+                    <strong style="color: black">{{ auth()->guard('staffs')->user()->fullName }}</strong>
+                </a>
+            </div>
             <div class="list-group">
-                <a href="{{ route('manager.index') }}" class="list-group-item list-group-item-action @yield('nav-link-manager')"><i class="fas fa-home"></i> Trang chủ</a>
                 <a href="{{ route('manager.position') }}" class="list-group-item list-group-item-action @yield('nav-link-position')"><i class="fas fa-address-book" style="color: #000205;"></i> Quản lý chức vụ</a>
                 <a href="#" class="list-group-item list-group-item-action @yield('nav-link-a')">A third link item</a>
                 <a href="#" class="list-group-item list-group-item-action @yield('nav-link-b')">A fourth link item</a>

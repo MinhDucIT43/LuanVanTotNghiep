@@ -38,6 +38,7 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
         Route::get('manager/index', [ManagerController::class, 'index'])->name('manager.index');
         /*Manager Positions*/
         Route::get('manager/position', [ManagerController::class, 'getPosition'])->name('manager.position');
+        Route::post('addposition', [ManagerController::class, 'getAddPosition'])->name('manager.getaddposition');
         /*Manager Staffs*/
         Route::post('addstaff', [StaffController::class, 'addstaff'])->name('manager.addstaff');
 

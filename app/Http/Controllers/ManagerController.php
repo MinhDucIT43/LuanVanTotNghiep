@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddPositionRequest;
 use App\Models\positions;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class ManagerController extends Controller
 {
@@ -14,5 +15,9 @@ class ManagerController extends Controller
     public function getPosition(){
         $getPositions = positions::all();
         return view('position.index', compact('getPositions'));
+    }
+
+    public function getAddPosition(AddPositionRequest $request){
+        dd($request->positionName);
     }
 }
