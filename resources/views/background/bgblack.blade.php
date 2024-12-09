@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Buffet King BBQ</title>
+    <title>Buffet King BBQ @yield('nameTitle')</title>
     
     <link rel="shortcut icon" href="resources/images/login/logo.png">
     <link rel="stylesheet" href="resources/css/login/login.css">
-    <link rel="stylesheet" href="resources/css/resetpassword/resetpassword.css">
+    <link rel="stylesheet" href="resources/css/@yield('whereToStoreCSSFiles')">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />

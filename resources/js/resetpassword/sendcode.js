@@ -19,30 +19,27 @@ function render(){
 }
 
 function sendCode(){
+    const inputPhone = document.getElementById("phone").value.trim(); // Dùng trim() để loại bỏ khoảng trắng
+  if (!inputPhone) {
+    toastr.error('Vui lòng nhập số điện thoại.', 'Lỗi');
+  } else {
     var phone = $('#phone').val();
     var updatedPhoneNumber = phone.replace(/^0/, "+84");
-
     firebase.auth().signInWithPhoneNumber(updatedPhoneNumber, window.recaptchaVerifier).then(function(confirmationResult){
         window.confirmationResult = confirmationResult;
         coderesult = confirmationResult;
-        $('#sentMessage').text("Message sent successfully!");
-        $('#sentMessage').show();
+        toastr.success('Đã gửi mã xác thực tới số điện thoại vừa nhập.', 'Thành công');
     }).catch(function(error){
-        $('#error').text(error.message);
-        $('#error').show();
+        toastr.error('Vui lòng kiểm tra lại số điện thoại.', 'Thất bại');
     });
+  }
 }
 
 function verifyCode(){
     var code = $('#code').val();
-    console.log(code);
     coderesult.confirm(code).then(function(result){
         var user = result.user;
-        $('#sucessMessage').text("Verify code successfully!");
-        $('#sucessMessage').show();
     }).catch(function(error){
         console.log(error);
-        $('#error').text(error.message);
-        $('#error').show();
     });
 }

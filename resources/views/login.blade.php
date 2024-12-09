@@ -13,7 +13,7 @@
                 <input type="password" name="password" id="password" class="form-control" placeholder="Nhập mật khẩu" value="{{old('password')}}">
             </div>
             <button type="submit" class="btn btn-primary">Đăng nhập</button>
-            <a href="{{ route('repass.getResetPassword') }}" id="resetpassword"><img src="resources/images/login/key.png" alt="Key" id="key"> Đổi mật khẩu</a>
+            <a href="{{ route('repass.inputPhoneNumberAndReceiveCode') }}" id="inputPhoneNumberAndReceiveCode"><img src="resources/images/login/key.png" alt="Key" id="key"> Đổi mật khẩu</a>
         </form>
         <div class="error-messages">
             @if($errors->has('phone'))

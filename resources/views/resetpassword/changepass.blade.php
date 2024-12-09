@@ -4,7 +4,7 @@
 <div class="login-form">
     <img src="resources/images/login/login.png" alt="Login" id="login-img">
     <a class="btn btn-primary m-1" href="{{ route('auth.getLogin') }}" role="button" id="return">Trở về</a>
-    <h1 id="title-resetpassword">Đổi mật khẩu</h1>
+    <h1 id="title-resetpassword" style="color: blue; text-align: center; position: relative; top: 10px;">Đổi mật khẩu</h1>
     <form method="POST" action="{{ route('repass.postChangePass') }}" id="form-inputpass"> @csrf
         <div class="form-group">
             <label>Mật khẩu cũ</label>
