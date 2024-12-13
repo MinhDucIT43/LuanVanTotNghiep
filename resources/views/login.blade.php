@@ -5,11 +5,11 @@
         <img src="resources/images/login/login.png" alt="Login" id="login-img">
         <form method="post" action="{{ route('auth.postLogin') }}"> @csrf
             <div class="form-group" id="top-form">
-                <label>Số điện thoại</label>
+                <label for="phone">Số điện thoại</label>
                 <input type="text" name="phone" id="phone" class="form-control" placeholder="Nhập số điện thoại" value="{{old('phone')}}" autofocus>
             </div>
             <div class="form-group">
-                <label>Mật khẩu</label>
+                <label for="password">Mật khẩu</label>
                 <input type="password" name="password" id="password" class="form-control" placeholder="Nhập mật khẩu" value="{{old('password')}}">
             </div>
             <button type="submit" class="btn btn-primary">Đăng nhập</button>

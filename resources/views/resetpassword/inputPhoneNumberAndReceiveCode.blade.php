@@ -10,13 +10,13 @@ resetpassword/resetpassword.css
 
 @section('content')
 <div id="return">
-    <a class="btn btn-success m-1" href="{{ url()->previous() }}" role="button">Trở về</a>
+    <a class="btn btn-success m-1" href="{{ route('auth.getLogin') }}" role="button">Trở về</a>
 </div>
 <div class="login-form">
     <h1 id="title-resetpassword">Đổi mật khẩu</h1>
     <form id="formSubmitPhoneNumber"> @csrf
         <div class="form-group" id="top-form">
-            <label>Số điện thoại</label>
+            <label for="phone">Số điện thoại</label>
             <input type="text" name="phone" id="phone" class="form-control" placeholder="Nhập số điện thoại" value="{{old('phone')}}" form="formSubmitCode" autofocus>
             <br>
             <div id="recaptcha-container"></div><br>
@@ -27,7 +27,7 @@ resetpassword/resetpassword.css
         <div class="card card-body">
             <form id="formSubmitCode" method="post" action="{{ route('repass.verify') }}"> @csrf
                 <div class="form-group" id="top-form">
-                    <label>Mã xác thực</label>
+                    <label for="code">Mã xác thực</label>
                     <input type="text" name="code" id="code" class="form-control" placeholder="Nhập mã xác thực" value="{{old('code')}}">
                 </div>
                 <button type="submit" onclick="verifyCode()" class="btn btn-primary">Xác thực</button>

@@ -37,6 +37,11 @@
     float: right;
     display: flex;    
 }
+.error-message{
+    color: red;
+    font-size: 15px;
+    font-style: italic;
+}
 #contentPosition{
     width: 100%;
 }

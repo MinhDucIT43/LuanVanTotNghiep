@@ -28,8 +28,8 @@ Route::get('logout', [AuthController::class, 'logout'])->name('auth.logout');
 Route::get('inputPhoneNumberAndReceiveCode', [RepassController::class, 'inputPhoneNumberAndReceiveCode'])->name('repass.inputPhoneNumberAndReceiveCode');
 Route::post('verify', [RepassController::class, 'verify'])->name('repass.verify');
 Route::group(['middleware' => 'CheckPhoneToEnterCodeForChangePassword'], function () {
-    Route::get('changepass', [RepassController::class, 'getChangePass'])->name('repass.getChangePass');
-    Route::post('changepass', [RepassController::class, 'postChangePass'])->name('repass.postChangePass');
+    Route::get('changePassword', [RepassController::class, 'getChangePass'])->name('repass.getChangePass');
+    Route::post('changePassword', [RepassController::class, 'postChangePass'])->name('repass.postChangePass');
 });
 
 Route::group(['middleware' => 'prevent-back-history'], function () {
@@ -38,10 +38,11 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
         Route::get('manager/index', [ManagerController::class, 'index'])->name('manager.index');
         /*Manager Positions*/
         Route::get('manager/position', [ManagerController::class, 'getPosition'])->name('manager.position');
-        Route::post('addposition', [ManagerController::class, 'getAddPosition'])->name('manager.getaddposition');
+        Route::post('addPosition', [ManagerController::class, 'addPosition'])->name('manager.addPosition');
+        Route::post('updatePosition/{position_code}', [ManagerController::class, 'updatePosition'])->name('manager.updatePosition');
+        Route::get('deletePosition/{position_code}', [ManagerController::class, 'deletePosition'])->name('manager.deletePosition');
         /*Manager Staffs*/
         Route::post('addstaff', [StaffController::class, 'addstaff'])->name('manager.addstaff');
-
         /*Staffs*/
         Route::get('staff/index', [StaffController::class, 'index'])->name('staff.index');
     });
