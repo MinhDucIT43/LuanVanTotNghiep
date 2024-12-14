@@ -6,19 +6,7 @@ use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\RepassController;
 use App\Http\Controllers\StaffController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
 /*Login - Logout*/
-
 Route::get('/', [AuthController::class, 'getLogin'])->name('auth.getLogin');
 Route::post('login', [AuthController::class, 'postLogin'])->name('auth.postLogin');
 /*-------*/
@@ -34,15 +22,19 @@ Route::group(['middleware' => 'CheckPhoneToEnterCodeForChangePassword'], functio
 
 Route::group(['middleware' => 'prevent-back-history'], function () {
     Route::group(['middleware' => 'CheckLogin'], function () {
-        /*Manager*/
-        Route::get('manager/index', [ManagerController::class, 'index'])->name('manager.index');
-        /*Manager Positions*/
-        Route::get('manager/position', [ManagerController::class, 'getPosition'])->name('manager.position');
-        Route::post('addPosition', [ManagerController::class, 'addPosition'])->name('manager.addPosition');
-        Route::post('updatePosition/{position_code}', [ManagerController::class, 'updatePosition'])->name('manager.updatePosition');
-        Route::get('deletePosition/{position_code}', [ManagerController::class, 'deletePosition'])->name('manager.deletePosition');
-        /*Manager Staffs*/
-        Route::post('addstaff', [StaffController::class, 'addstaff'])->name('manager.addstaff');
+        Route::group(['prefix' => 'manager'], function () {
+            /*Manager*/
+            Route::get('/', [ManagerController::class, 'index'])->name('manager.index');
+            Route::group(['prefix' => 'position'], function () {
+                /*Manager Positions*/
+                Route::get('/', [ManagerController::class, 'getPosition'])->name('manager.position');
+                Route::post('addPosition', [ManagerController::class, 'addPosition'])->name('manager.addPosition');
+                Route::post('updatePosition/{position_code}', [ManagerController::class, 'updatePosition'])->name('manager.updatePosition');
+                Route::get('deletePosition/{position_code}', [ManagerController::class, 'deletePosition'])->name('manager.deletePosition');
+            });
+            /*Manager Staffs*/
+            Route::post('addstaff', [StaffController::class, 'addstaff'])->name('manager.addstaff');
+        });
         /*Staffs*/
         Route::get('staff/index', [StaffController::class, 'index'])->name('staff.index');
     });

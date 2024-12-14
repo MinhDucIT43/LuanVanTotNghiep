@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\positions;
 
-use App\Http\Requests\AddPositionRequest;
+use App\Http\Requests\PositionRequest;
 
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class ManagerController extends Controller
 {
@@ -22,7 +21,7 @@ class ManagerController extends Controller
         return view('position.index', compact('getPositions'));
     }
 
-    public function addPosition(AddPositionRequest $request)
+    public function addPosition(PositionRequest $request)
     {
         $position = new positions();
         $position->position_name = $request->positionName;
@@ -33,18 +32,24 @@ class ManagerController extends Controller
         return redirect()->back()->with('success', 'Thêm chức vụ thành công!');
     }
 
-    public function updatePosition(Request $request, $position)
+    public function updatePosition(PositionRequest $request, $position)
     {
         positions::where('position_code',$position)->update([
             'position_name' => $request->positionName,
             'salary' => $request->salary,
+            'updated_at' => Carbon::now('Asia/Ho_Chi_Minh'),
         ]); 
         return redirect()->back()->with('success', 'Cập nhật thành công!');
     }
 
     public function deletePosition($position)
     {
-        positions::where('position_code',$position)->delete();
-        return redirect()->back()->with('success','Xóa chức vụ thành công!');
+        $checkChildOfPosition = positions::find($position);
+        if($checkChildOfPosition->staffs()->exists()){
+            return redirect()->back()->with('error','Tồn tại nhân viên có chức vụ bạn muốn xoá!');
+        }else{
+            positions::where('position_code',$position)->delete();
+            return redirect()->back()->with('success','Xóa chức vụ thành công!');
+        }
     }
 }

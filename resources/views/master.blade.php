@@ -14,7 +14,7 @@
     <!-- Link Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+    <!-- Link FontAwesome -->
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 </head>
 
@@ -60,27 +60,8 @@
             @yield('content-manager')
         </div>
     </div>
-    <!-- Script tạo đồng hồ -->
-    <script>
-        function updateClock() {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            const timeString = `${hours}:${minutes}:${seconds}`;
-            document.getElementById('clock').textContent = timeString;
-        }
-        // Cập nhật đồng hồ mỗi giây
-        setInterval(updateClock, 1000);
-        // Hiển thị thời gian ngay lập tức khi tải trang
-        updateClock();
-
-        // Cột STT:
-        const rows = document.querySelectorAll(".table tbody tr");
-        rows.forEach((row, index) => {
-            row.cells[0].textContent = index + 1;
-        });
-    </script>
+    <script src="{{asset('resources/js/master/clock.js')}}"></script>
+    <script src="{{asset('resources/js/master/serial.js')}}"></script>
 </body>
 
 </html>
