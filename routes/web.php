@@ -7,6 +7,7 @@ use App\Http\Controllers\RepassController;
 use App\Http\Controllers\StaffController;
 
 /*Login - Logout*/
+
 Route::get('/', [AuthController::class, 'getLogin'])->name('auth.getLogin');
 Route::post('login', [AuthController::class, 'postLogin'])->name('auth.postLogin');
 /*-------*/
@@ -32,8 +33,11 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
                 Route::post('updatePosition/{position_code}', [ManagerController::class, 'updatePosition'])->name('manager.updatePosition');
                 Route::get('deletePosition/{position_code}', [ManagerController::class, 'deletePosition'])->name('manager.deletePosition');
             });
-            /*Manager Staffs*/
-            Route::post('addstaff', [StaffController::class, 'addstaff'])->name('manager.addstaff');
+            Route::group(['prefix' => 'staff'], function () {
+                /*Manager Staffs*/
+                Route::get('/', [ManagerController::class, 'getStaff'])->name('manager.staff');
+                Route::post('addstaff', [StaffController::class, 'addstaff'])->name('manager.addstaff');
+            });
         });
         /*Staffs*/
         Route::get('staff/index', [StaffController::class, 'index'])->name('staff.index');

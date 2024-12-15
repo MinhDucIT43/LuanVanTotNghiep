@@ -50,8 +50,8 @@
                 </a>
             </div>
             <div class="list-group">
-                <a href="{{ route('manager.position') }}" class="list-group-item list-group-item-action @yield('nav-link-position')"><i class="fas fa-address-book" style="color: #000205;"></i> Quản lý chức vụ</a>
-                <a href="#" class="list-group-item list-group-item-action @yield('nav-link-a')">A third link item</a>
+                <a href="{{ route('manager.position') }}" class="list-group-item list-group-item-action @yield('nav-link-positions')"><i class="fas fa-id-badge fa-lg"></i> Quản lý chức vụ</a>
+                <a href="{{ route('manager.staff') }}" class="list-group-item list-group-item-action @yield('nav-link-staffs')"><i class="fas fa-address-book fa-lg"></i> Quản lý nhân viên</a>
                 <a href="#" class="list-group-item list-group-item-action @yield('nav-link-b')">A fourth link item</a>
                 <a href="#" class="list-group-item list-group-item-action @yield('nav-link-c')">A disabled link item</a>
             </div>

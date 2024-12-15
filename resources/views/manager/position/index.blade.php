@@ -5,10 +5,10 @@
 @endsection
 
 @section('content-manager')
-    <div id="contentPosition">
+    <div class="contentFunction">
         <h2 class="title-assignment">CHỨC VỤ</h2>
         <span id="entireAddPosition">
-            <button type="button" class="btn btn-primary addPosition" data-bs-toggle="modal" data-bs-target="#addPosition">Thêm
+            <button type="button" class="btn btn-primary functionNewAdd" data-bs-toggle="modal" data-bs-target="#addPosition">Thêm
                 chức vụ</button>
             <div class="modal fade" id="addPosition" tabindex="-1" aria-labelledby="addPositionLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -163,10 +163,10 @@
     {{-- Handle Function Position --}}
     @if ($errors->any())
         <script src="{{ asset('resources/js/position/addposition.js') }}"></script>
-        {{-- <script src="{{asset('resources/js/position/updateposition.js')}}"></script> --}}
+        <script src="{{asset('resources/js/position/updateposition.js')}}"></script>
     @endif
 @endsection
 
-@section('nav-link-position')
+@section('nav-link-positions')
     active
 @endsection

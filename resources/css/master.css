@@ -42,12 +42,13 @@
     font-size: 15px;
     font-style: italic;
 }
-#contentPosition{
+.contentFunction{
     width: 100%;
+    text-align: center;
 }
 .title-assignment{
     text-align: center;
 }
-.addPosition{
+.functionNewAdd{
     float: right;
 }
