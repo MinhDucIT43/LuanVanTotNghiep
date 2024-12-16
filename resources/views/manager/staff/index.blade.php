@@ -49,7 +49,6 @@
                         <td>{{ $staff->fullName }}</td>
                         <td>{{ App\Models\positions::where('position_code', $staff['position_code'])->value('position_name') }}
                         </td>
-                        {{-- <td>{{ date('d/m/Y',strtotime($staff->workingDay)) }}</td> --}}
                         <td>{{ $staff->phone }}</td>
                         <td>
                             @if ($staff->status == 1)
@@ -59,7 +58,25 @@
                             @endif
                         </td>
                         <td>
-                            <button type="button" class="btn btn-info seemore" data-bs-toggle="modal" data-bs-target="#seemore{{ $staff->staff_code }}">xem thêm</button>
+                            <button type="button" class="btn btn-info seeMore" data-bs-toggle="modal" data-bs-target="#seeMore{{ $staff->staff_code }}">xem thêm</button>
+                            <div class="modal fade" id="seeMore{{ $staff->staff_code }}" tabindex="-1"
+                                aria-labelledby="seeMoreLabel{{ $staff->staff_code }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <strong>{{ $staff->fullName }}</strong>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="seeMore"><strong>Giới tính:</strong> {{ $staff->sex }}</p>
+                                            <p class="seeMore"><strong>Ngày sinh:</strong> {{ date('d/m/Y',strtotime($staff->birthday)) }}</p>
+                                            <p class="seeMore"><strong>Địa chỉ:</strong> {{ $staff->address }}</p>
+                                            <p class="seeMore"><strong>Ngày vào làm:</strong> {{ date('d/m/Y',strtotime($staff->workingDay)) }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                         <td>
                             <span id="entireUpdateStaff">
