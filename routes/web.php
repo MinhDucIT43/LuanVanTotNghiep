@@ -37,6 +37,7 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
                 /*Manager Staffs*/
                 Route::get('/', [ManagerController::class, 'getStaff'])->name('manager.staff');
                 Route::post('addstaff', [StaffController::class, 'addstaff'])->name('manager.addstaff');
+                Route::get('/addStaff/getOptionPosition', [ManagerController::class, 'getOptionPosition'])->name('manager.addStaff.getOptionPosition');
             });
         });
         /*Staffs*/

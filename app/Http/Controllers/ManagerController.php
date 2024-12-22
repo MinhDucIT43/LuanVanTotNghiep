@@ -19,7 +19,7 @@ class ManagerController extends Controller
     // Manager Position
     public function getPosition()
     {
-        $getPositions = positions::orderBy('position_code', 'desc')->get();
+        $getPositions = positions::orderBy('position_code', 'desc')->simplePaginate(7);
         return view('manager.position.index', compact('getPositions'));
     }
 
@@ -59,6 +59,13 @@ class ManagerController extends Controller
     public function getStaff()
     {
         $getStaffs = staffs::orderBy('staff_code', 'desc')->get();
-        return view('manager.staff.index', compact('getStaffs'));
+        $positions = positions::all();
+        return view('manager.staff.index', compact('getStaffs','positions'));
+    }
+
+    public function getOptionPosition(){
+         // Trả dữ liệu dạng JSON
+         $positions = positions::all();
+         return response()->json($positions);
     }
 }

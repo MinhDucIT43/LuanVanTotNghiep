@@ -16,6 +16,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <!-- Link FontAwesome -->
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -61,7 +63,7 @@
         </div>
     </div>
     <script src="{{asset('resources/js/master/clock.js')}}"></script>
-    <script src="{{asset('resources/js/master/serial.js')}}"></script>
+    {{-- <script src="{{asset('resources/js/master/serial.js')}}"></script> --}}
 </body>
 
 </html>
