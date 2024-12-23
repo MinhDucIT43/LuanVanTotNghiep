@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PositionRequest extends FormRequest
 {
@@ -21,10 +22,20 @@ class PositionRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'positionName' => 'required|unique:positions,position_name',
-            'salary' => 'required',
+        $position_code = $this->route('position_code');
+        
+        $rules = [
+            'positionName' => 'required',
+            'salary' => 'required|numeric|gt:-1',
         ];
+
+        if($position_code){
+            $rules['position_name'] = Rule::unique('positions')->ignore($position_code);
+        }else{
+            $rules['positionName'] = 'unique:positions,position_name';
+        }
+
+        return $rules;
     }
 
     public function messages(): array
@@ -33,6 +44,8 @@ class PositionRequest extends FormRequest
             'positionName.required' => "Vui lòng nhập tên chức vụ.",
             'positionName.unique' => "Chức vụ này đã tồn tại.",
             'salary.required' => "Vui lòng nhập lương căn bản.",
+            'salary.numeric' => "Lương căn bản phải là số.",
+            'salary.gt' => "Lương căn bản không được nhỏ hơn.",
         ];
     }
 }

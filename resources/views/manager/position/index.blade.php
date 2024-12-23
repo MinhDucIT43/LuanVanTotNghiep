@@ -8,7 +8,7 @@
     <div class="contentFunction">
         <h2 class="title-assignment">CHỨC VỤ</h2>
         <span id="entireAddPosition">
-            <button type="button" class="btn btn-primary functionNewAdd" data-bs-toggle="modal"
+            <button type="button" class="btn btn-primary functionNewAdd" id="btn-addPosition" data-bs-toggle="modal"
                 data-bs-target="#addPosition">Thêm
                 chức vụ</button>
             <div class="modal fade" id="addPosition" tabindex="-1" aria-labelledby="addPositionLabel" aria-hidden="true">
@@ -71,7 +71,8 @@
                             <td class="specificContents">{{ number_format($position->salary) }} VNĐ</td>
                             <td>
                                 <span id="entireUpdatePosition">
-                                    <button type="button" class="btn updatePosition specificContents" data-bs-toggle="modal"
+                                    <button type="button" class="btn updatePosition specificContents"
+                                        data-bs-toggle="modal"
                                         data-bs-target="#updatePosition{{ $position->position_code }}"><i
                                             class="fas fa-tools fa-lg"
                                             style="color: #FFD43B; margin-right: 1em;"></i></button>
@@ -134,7 +135,8 @@
                                     </div>
                                 </span>
                                 <span id="entireDeletePosition">
-                                    <button type="button" class="btn deletePosition specificContents" data-bs-toggle="modal"
+                                    <button type="button" class="btn deletePosition specificContents"
+                                        data-bs-toggle="modal"
                                         data-bs-target="#deletePosition{{ $position->position_code }}"><i
                                             class="fas fa-times fa-lg" style="color: #ff0000;"></i></button>
                                     <div class="modal fade" id="deletePosition{{ $position->position_code }}"
@@ -177,6 +179,20 @@
             {{ $getPositions->links() }}
         </span>
     </div>
+    {{-- <script>
+        // Lấy nút bằng ID
+        const btnAddPosition = document.getElementById('btn-addPosition');
+
+        // Gắn sự kiện click cho nút
+        btnAddPosition.addEventListener('click', () => {
+            const inputs = modal.querySelectorAll('input');
+
+            // Lặp qua từng input và xóa dữ liệu
+            inputs.forEach(input => {
+                input.value = '';
+            });
+        });
+    </script> --}}
     {{-- Handle Function Position --}}
     @if ($errors->any())
         <script src="{{ asset('resources/js/position/addposition.js') }}"></script>

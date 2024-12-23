@@ -35,7 +35,7 @@
     height: 610px;
     width: 85%;
     float: right;
-    display: flex;    
+    display: flex;
 }
 .error-message{
     color: red;

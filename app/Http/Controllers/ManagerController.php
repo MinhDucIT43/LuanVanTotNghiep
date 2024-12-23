@@ -9,6 +9,9 @@ use App\Http\Requests\PositionRequest;
 
 use Carbon\Carbon;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
 class ManagerController extends Controller
 {
     public function index()
@@ -36,22 +39,22 @@ class ManagerController extends Controller
 
     public function updatePosition(PositionRequest $request, $position)
     {
-        positions::where('position_code',$position)->update([
+        positions::where('position_code', $position)->update([
             'position_name' => $request->positionName,
             'salary' => $request->salary,
             'updated_at' => Carbon::now('Asia/Ho_Chi_Minh'),
-        ]); 
+        ]);
         return redirect()->back()->with('success', 'Cập nhật thành công!');
     }
 
     public function deletePosition($position)
     {
         $checkChildOfPosition = positions::find($position);
-        if($checkChildOfPosition->staffs()->exists()){
-            return redirect()->back()->with('error','Tồn tại nhân viên có chức vụ bạn muốn xoá!');
-        }else{
-            positions::where('position_code',$position)->delete();
-            return redirect()->back()->with('success','Xóa chức vụ thành công!');
+        if ($checkChildOfPosition->staffs()->exists()) {
+            return redirect()->back()->with('error', 'Tồn tại nhân viên có chức vụ bạn muốn xoá!');
+        } else {
+            positions::where('position_code', $position)->delete();
+            return redirect()->back()->with('success', 'Xóa chức vụ thành công!');
         }
     }
 
@@ -60,12 +63,28 @@ class ManagerController extends Controller
     {
         $getStaffs = staffs::orderBy('staff_code', 'desc')->get();
         $positions = positions::all();
-        return view('manager.staff.index', compact('getStaffs','positions'));
+        return view('manager.staff.index', compact('getStaffs', 'positions'));
     }
 
-    public function getOptionPosition(){
-         // Trả dữ liệu dạng JSON
-         $positions = positions::all();
-         return response()->json($positions);
+    public function getOptionPosition()
+    {
+        $positions = positions::all();
+        return response()->json($positions);
+    }
+
+    public function addStaff(Request $request)
+    {
+        $staff = new staffs();
+        $staff->fullName = $request->fullName;
+        $staff->imgOfStaff = $request->imgOfStaff;
+        $staff->birthday = $request->birthday;
+        $staff->sex = $request->sex;
+        $staff->address = $request->address;
+        $staff->workingDay = $request->workingDay;
+        $staff->phone = $request->phone;
+        $staff->password = Hash::make($request->password);
+        $staff->position_code = $request->position;
+        $staff->save();
+        return redirect()->back()->with('success', 'Thêm nhân viên thành công!');
     }
 }

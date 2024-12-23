@@ -8,10 +8,11 @@
     <div class="contentFunction">
         <h2 class="title-assignment">Nhân viên</h2>
         <span id="entireAddStaff">
-            <button type="button" id="btnFunctionNewAdd" class="btn btn-primary functionNewAdd" data-bs-toggle="modal" data-bs-target="#addStaff"> Thêm
+            <button type="button" id="btnFunctionNewAdd" class="btn btn-primary functionNewAdd" data-bs-toggle="modal"
+                data-bs-target="#addStaff"> Thêm
                 nhân viên</button>
             <div class="modal fade" id="addStaff" tabindex="-1" aria-labelledby="addStaffLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <strong>
@@ -20,52 +21,60 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form id="formAddStaff" method="post" action="#"> @csrf
-                                <div class="form-group" id="top-form">
-                                    <strong><label for="fullName">Họ và tên:</label></strong>
-                                    <input type="text" name="fullName" id="fullName" class="form-control"
-                                        placeholder="Nhập họ và tên" value="{{ old('fullName') }}" autofocus>
-                                </div>
-                                <div class="form-group" id="top-form">
-                                    <strong><label for="imgOfStaff">Ảnh nhân viên:</label></strong>
-                                    <input type="file" name="imgOfStaff" id="imgOfStaff" accept=".jpg,.png">
-                                </div>
-                                <div class="form-group" id="top-form">
-                                    <strong><label for="birthday">Năm sinh:</label></strong>
-                                    <input type="date" id="birthday" name="birthday"/>
-                                </div>
-                                <div class="form-group" id="top-form">
-                                    <strong><label for="sex">Giới tính:</label></strong>
-                                    <input type="radio" name="sex" id="sex" value="Nam" checked="checked"/>Nam
-                                    <input type="radio" name="sex" id="sex" value="Nữ"/>Nữ
-                                </div>
-                                <div class="form-group" id="top-form">
-                                    <strong><label for="address">Địa chỉ:</label></strong>
-                                    <textarea name="address" id="address" cols="21" rows="6" placeholder="Nhập địa chỉ nhân viên"></textarea>
-                                </div>
-                                <div class="form-group" id="top-form">
-                                    <strong><label for="workingDay">Ngày vào làm:</label></strong>
-                                    <input type="date" id="workingDay" name="workingDay"/>
-                                </div>
-                                <div class="form-group" id="top-form">
-                                    <strong><label for="status">Trạng thái:</label></strong>
-                                    <input type="radio" name="status" id="status" value="1" checked="checked"/>
-                                    <input type="radio" name="status" id="status" value="0"/>
-                                </div>
-                                <div class="form-group" id="top-form">
-                                    <strong><label for="phone">Số điện thoại:</label></strong>
-                                    <input type="text" name="phone" id="phone" class="form-control"
-                                        placeholder="Nhập số điện thoại" value="{{ old('phone') }}">
-                                </div>
-                                <div class="form-group" id="top-form">
-                                    <strong><label for="password">Mật khẩu:</label></strong>
-                                    <input type="password" name="password" id="password" class="form-control"
-                                        placeholder="Nhập mật khẩu" value="{{ old('password') }}">
-                                </div>
-                                <div class="form-group" id="top-form">
-                                    <strong><label for="position">Chức vụ:</label></strong>
-                                    <select name="position" id="optionPosition">{{-- Hiển thị dữ liệu thông qua Ajax --}}</select>
-                                </div>
+                            <form id="formAddStaff" method="post" action="{{ route('manager.addStaff') }}"> @csrf
+                                <table>
+                                    <div class="form-group" id="top-form">
+                                        <tr>
+                                            <td><strong><label for="fullName">Họ và tên:</label></strong></td>
+                                            <td><input type="text" name="fullName" id="fullName" class="form-control"
+                                                    placeholder="Nhập họ và tên" value="{{ old('fullName') }}" autofocus>
+                                            </td>
+                                            <td><strong><label for="imgOfStaff">Ảnh nhân viên:</label></strong></td>
+                                            <td><input class="form-control" type="file" id="imgOfStaff" name="imgOfStaff" accept=".jpg,.png"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong><label for="birthday">Năm sinh:</label></strong></td>
+                                            <td><input type="date" id="birthday" name="birthday"></td>
+                                            <td><strong><label for="sex">Giới tính:</label></strong></td>
+                                            <td>
+                                                <input type="radio" name="sex" id="sex" value="Nam" checked="checked">Nam
+                                                <input type="radio" name="sex" id="sex" value="Nữ">Nữ
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong><label for="address">Địa chỉ:</label></strong></td>
+                                            <td><textarea name="address" id="address" cols="21" rows="6" placeholder="Nhập địa chỉ nhân viên"></textarea></td>
+                                            <td><strong><label for="workingDay">Ngày vào làm:</label></strong></td>
+                                            <td><input type="date" id="workingDay" name="workingDay"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong><label for="phone">Số điện thoại:</label></strong></td>
+                                            <td>
+                                                <input type="text" name="phone" id="phone" class="form-control"
+                                                    placeholder="Nhập số điện thoại" value="{{ old('phone') }}">
+                                            </td>
+                                            <td><strong><label for="position">Chức vụ:</label></strong></td>
+                                            <td>
+                                                <select name="position" id="optionPosition" class="form-select" aria-label="Default select example">
+                                                    <option selected hidden>Chọn chức vụ</option>
+                                                    {{-- Hiển thị dữ liệu thông qua Ajax --}}
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong><label for="password">Mật khẩu:</label></strong></td>
+                                            <td><input type="password" name="password" id="password" class="form-control"
+                                                    placeholder="Nhập mật khẩu" value="{{ old('password') }}">
+                                            </td>
+                                        </tr>
+                                    </div>
+                                    {{-- <div class="form-group" id="top-form" style="display:none;">
+                                        <strong><label for="status">Trạng thái:</label></strong>
+                                        <input type="radio" name="status" id="status" value="1"
+                                            checked="checked" />
+                                        <input type="radio" name="status" id="status" value="0" />
+                                    </div> --}}
+                                </table>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary">Thêm</button>
@@ -136,8 +145,9 @@
                             </td>
                             <td class="specificContents">
                                 <span id="entireUpdateStaff">
-                                    <button type="button" class="btn updateStaff specificContents" data-bs-toggle="modal"
-                                        data-bs-target="#updateStaff{{ $staff->staff_code }}"><i class="fas fa-tools fa-lg"
+                                    <button type="button" class="btn updateStaff specificContents"
+                                        data-bs-toggle="modal" data-bs-target="#updateStaff{{ $staff->staff_code }}"><i
+                                            class="fas fa-tools fa-lg"
                                             style="color: #FFD43B; margin-right: 1em;"></i></button>
                                     <div class="modal fade" id="updateStaff{{ $staff->staff_code }}" tabindex="-1"
                                         aria-labelledby="updateStaffLabel{{ $staff->staff_code }}" aria-hidden="true">
@@ -163,8 +173,8 @@
                                     </div>
                                 </span>
                                 <span id="entireDeleteStaff">
-                                    <button type="button" class="btn deleteStaff specificContents" data-bs-toggle="modal"
-                                        data-bs-target="#deleteStaff{{ $staff->staff_code }}"><i
+                                    <button type="button" class="btn deleteStaff specificContents"
+                                        data-bs-toggle="modal" data-bs-target="#deleteStaff{{ $staff->staff_code }}"><i
                                             class="fas fa-times fa-lg" style="color: #ff0000;"></i></button>
                                     <div class="modal fade" id="deleteStaff{{ $staff->staff_code }}" tabindex="-1"
                                         aria-labelledby="deleteStaffLabel{{ $staff->staff_code }}" aria-hidden="true">
@@ -203,21 +213,19 @@
 
     <script>
         const userStoreUrl = "{{ route('manager.addStaff.getOptionPosition') }}";
-        $(document).ready(function () {
-            $('#btnFunctionNewAdd').click(function () {
+        $(document).ready(function() {
+            $('#btnFunctionNewAdd').click(function() {
                 $.ajax({
                     url: userStoreUrl, // URL đến route Laravel
                     method: 'GET',
-                    success: function (positions) {
-                        $('#optionPosition').show();
-                        $('#optionPosition').empty();
-                        positions.forEach(function (position) {
+                    success: function(positions) {
+                        positions.forEach(function(position) {
                             $('#optionPosition').append(`
                                 <option value="${position.position_code}">${position.position_name}</option>
                             `);
                         });
                     },
-                    error: function (err) {
+                    error: function(err) {
                         console.error(err);
                     }
                 });
