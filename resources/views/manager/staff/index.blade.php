@@ -8,27 +8,22 @@
     <div class="contentFunction">
         <h2 class="title-assignment">Nhân viên</h2>
         <span id="entireAddStaff">
-            <button type="button" id="btnFunctionNewAdd" class="btn btn-primary functionNewAdd" data-bs-toggle="modal"
-                data-bs-target="#addStaff"> Thêm
-                nhân viên</button>
-            <div class="modal fade" id="addStaff" tabindex="-1" aria-labelledby="addStaffLabel" aria-hidden="true">
+            <button type="button" id="btnFunctionNewAdd" class="btn btn-primary functionNewAdd" data-bs-toggle="modal" data-bs-target="#addStaff"> Thêm nhân viên</button>
+            <div class="modal fade" id="addStaff" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" aria-labelledby="addStaffLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <strong>
-                                <h3 class="modal-title" id="addStaffLabel">Thêm nhân viên</h3>
-                            </strong>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <strong><h3 class="modal-title" id="addStaffLabel">Thêm nhân viên</h3></strong>
                         </div>
                         <div class="modal-body">
-                            <form id="formAddStaff" method="post" action="{{ route('manager.addStaff') }}"> @csrf
+                            <form id="formAddStaff" method="post" action="{{ route('manager.addStaff') }}">
+                                @csrf
+                                <input type="hidden" id="formType" name="formType" value="addStaffType">
                                 <table>
                                     <div class="form-group" id="top-form">
                                         <tr>
                                             <td><strong><label for="fullName">Họ và tên:</label></strong></td>
-                                            <td><input type="text" name="fullName" id="fullName" class="form-control"
-                                                    placeholder="Nhập họ và tên" value="{{ old('fullName') }}" autofocus>
-                                            </td>
+                                            <td><input type="text" name="fullName" id="fullName" class="form-control" placeholder="Nhập họ và tên" value="{{ old('fullName') }}" autofocus></td>
                                             <td><strong><label for="imgOfStaff">Ảnh nhân viên:</label></strong></td>
                                             <td><input class="form-control" type="file" id="imgOfStaff" name="imgOfStaff" accept=".jpg,.png"></td>
                                         </tr>
@@ -49,10 +44,7 @@
                                         </tr>
                                         <tr>
                                             <td><strong><label for="phone">Số điện thoại:</label></strong></td>
-                                            <td>
-                                                <input type="text" name="phone" id="phone" class="form-control"
-                                                    placeholder="Nhập số điện thoại" value="{{ old('phone') }}">
-                                            </td>
+                                            <td><input type="text" name="phone" id="phone" class="form-control" placeholder="Nhập số điện thoại" value="{{ old('phone') }}"></td>
                                             <td><strong><label for="position">Chức vụ:</label></strong></td>
                                             <td>
                                                 <select name="position" id="optionPosition" class="form-select" aria-label="Default select example">
@@ -63,23 +55,46 @@
                                         </tr>
                                         <tr>
                                             <td><strong><label for="password">Mật khẩu:</label></strong></td>
-                                            <td><input type="password" name="password" id="password" class="form-control"
-                                                    placeholder="Nhập mật khẩu" value="{{ old('password') }}">
-                                            </td>
+                                            <td><input type="password" name="password" id="password" class="form-control" placeholder="Nhập mật khẩu" value="{{ old('password') }}"></td>
                                         </tr>
                                     </div>
-                                    {{-- <div class="form-group" id="top-form" style="display:none;">
-                                        <strong><label for="status">Trạng thái:</label></strong>
-                                        <input type="radio" name="status" id="status" value="1"
-                                            checked="checked" />
-                                        <input type="radio" name="status" id="status" value="0" />
-                                    </div> --}}
                                 </table>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Thêm</button>
+                                    <button type="submit" form="formAddStaff" class="btn btn-primary">Thêm</button>
                                 </div>
                             </form>
+                            @if(old('formType') === 'addStaffType' && $errors->any())
+                                <div class="error-messages">
+                                    @if($errors->has('fullName'))
+                                        <span class="error-message"> * {{ $errors->first('fullName') }} </span>
+                                    @endif
+                                    <br />
+                                    @if($errors->has('imgOfStaff'))
+                                        <span class="error-message"> * {{ $errors->first('imgOfStaff') }} </span>
+                                    @endif
+                                    <br />
+                                    @if($errors->has('birthday'))
+                                        <span class="error-message"> * {{ $errors->first('birthday') }} </span>
+                                    @endif
+                                    <br />
+                                    @if($errors->has('address'))
+                                        <span class="error-message"> * {{ $errors->first('address') }} </span>
+                                    @endif
+                                    <br />
+                                    @if($errors->has('workingDay'))
+                                        <span class="error-message"> * {{ $errors->first('workingDay') }} </span>
+                                    @endif
+                                    <br />
+                                    @if($errors->has('phone'))
+                                        <span class="error-message"> * {{ $errors->first('phone') }} </span>
+                                    @endif
+                                    <br />
+                                    @if($errors->has('password'))
+                                        <span class="error-message"> * {{ $errors->first('password') }} </span>
+                                    @endif
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -210,7 +225,10 @@
             </table>
         </span>
     </div>
-
+    {{-- Handle Function Position --}}
+    @if (old('formType') === 'addStaffType' && $errors->any())
+        <script src="{{ asset('resources/js/staff/addstaff.js') }}"></script>
+    @endif
     <script>
         const userStoreUrl = "{{ route('manager.addStaff.getOptionPosition') }}";
         $(document).ready(function() {

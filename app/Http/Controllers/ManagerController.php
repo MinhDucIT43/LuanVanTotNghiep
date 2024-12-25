@@ -6,6 +6,7 @@ use App\Models\positions;
 use App\Models\staffs;
 
 use App\Http\Requests\PositionRequest;
+use App\Http\Requests\StaffRequest;
 
 use Carbon\Carbon;
 
@@ -72,7 +73,7 @@ class ManagerController extends Controller
         return response()->json($positions);
     }
 
-    public function addStaff(Request $request)
+    public function addStaff(StaffRequest $request)
     {
         $staff = new staffs();
         $staff->fullName = $request->fullName;
