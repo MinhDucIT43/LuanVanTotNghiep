@@ -25,14 +25,14 @@ class PositionRequest extends FormRequest
         $position_code = $this->route('position_code');
         
         $rules = [
-            'positionName' => 'required',
+            'positionName' => ['required'],
             'salary' => 'required|numeric|gt:-1',
         ];
 
         if($position_code){
-            $rules['position_name'] = Rule::unique('positions')->ignore($position_code);
+            $rules['positionName'][] = Rule::unique('positions','position_name')->ignore($position_code,'position_code');
         }else{
-            $rules['positionName'] = 'unique:positions,position_name';
+            $rules['positionName'][] = Rule::unique('positions','position_name');
         }
 
         return $rules;

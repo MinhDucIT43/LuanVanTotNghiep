@@ -30,7 +30,7 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
                 /*Manager Positions*/
                 Route::get('/', [ManagerController::class, 'getPosition'])->name('manager.position');
                 Route::post('addPosition', [ManagerController::class, 'addPosition'])->name('manager.addPosition');
-                Route::post('updatePosition/{position_code}', [ManagerController::class, 'updatePosition'])->name('manager.updatePosition');
+                Route::put('updatePosition/{position_code}', [ManagerController::class, 'updatePosition'])->name('manager.updatePosition');
                 Route::get('deletePosition/{position_code}', [ManagerController::class, 'deletePosition'])->name('manager.deletePosition');
             });
             Route::group(['prefix' => 'staff'], function () {
