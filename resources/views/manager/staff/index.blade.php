@@ -8,7 +8,7 @@
     <div class="contentFunction">
         <h2 class="title-assignment">Nhân viên</h2>
         <span id="entireAddStaff">
-            <button type="button" id="btnFunctionNewAdd" class="btn btn-primary functionNewAdd" data-bs-toggle="modal" data-bs-target="#addStaff"> Thêm nhân viên</button>
+            <button type="button" id="btnFunctionNewAdd" class="btn btn-primary functionNewAdd" data-bs-toggle="modal" data-bs-target="#addStaff" onclick="getPositions()"> Thêm nhân viên</button>
             <div class="modal fade" id="addStaff" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" aria-labelledby="addStaffLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -16,7 +16,7 @@
                             <strong><h3 class="modal-title" id="addStaffLabel">Thêm nhân viên</h3></strong>
                         </div>
                         <div class="modal-body">
-                            <form id="formAddStaff" method="post" action="{{ route('manager.addStaff') }}">
+                            <form id="formAddStaff" method="post" action="{{ route('manager.addStaff') }}" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" id="formType" name="formType" value="addStaffType">
                                 <table>
@@ -25,22 +25,24 @@
                                             <td><strong><label for="fullName">Họ và tên:</label></strong></td>
                                             <td><input type="text" name="fullName" id="fullName" class="form-control" placeholder="Nhập họ và tên" value="{{ old('fullName') }}" autofocus></td>
                                             <td><strong><label for="imgOfStaff">Ảnh nhân viên:</label></strong></td>
-                                            <td><input class="form-control" type="file" id="imgOfStaff" name="imgOfStaff" accept=".jpg,.png"></td>
+                                            <td>
+                                                <input class="form-control" type="file" id="imgOfStaff" name="imgOfStaff">
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td><strong><label for="birthday">Năm sinh:</label></strong></td>
-                                            <td><input type="date" id="birthday" name="birthday"></td>
+                                            <td><input type="date" id="birthday" name="birthday" value="{{ old('birthday') }}"></td>
                                             <td><strong><label for="sex">Giới tính:</label></strong></td>
                                             <td>
-                                                <input type="radio" name="sex" id="sex" value="Nam" checked="checked">Nam
-                                                <input type="radio" name="sex" id="sex" value="Nữ">Nữ
+                                                <input type="radio" name="sex" id="sexMale" value="Nam" checked="checked" {{ old('sex') == 'Nam' ? 'checked' : '' }}>Nam
+                                                <input type="radio" name="sex" id="sexfemale" value="Nữ" {{ old('sex') == 'Nữ' ? 'checked' : '' }}>Nữ
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><strong><label for="address">Địa chỉ:</label></strong></td>
-                                            <td><textarea name="address" id="address" cols="21" rows="6" placeholder="Nhập địa chỉ nhân viên"></textarea></td>
+                                            <td><textarea name="address" id="address" cols="21" rows="6" placeholder="Nhập địa chỉ nhân viên">{{ old('address') }}</textarea></td>
                                             <td><strong><label for="workingDay">Ngày vào làm:</label></strong></td>
-                                            <td><input type="date" id="workingDay" name="workingDay"></td>
+                                            <td><input type="date" id="workingDay" name="workingDay" value="{{ old('workingDay') }}"></td>
                                         </tr>
                                         <tr>
                                             <td><strong><label for="phone">Số điện thoại:</label></strong></td>
@@ -48,7 +50,6 @@
                                             <td><strong><label for="position">Chức vụ:</label></strong></td>
                                             <td>
                                                 <select name="position" id="optionPosition" class="form-select" aria-label="Default select example">
-                                                    <option selected hidden>Chọn chức vụ</option>
                                                     {{-- Hiển thị dữ liệu thông qua Ajax --}}
                                                 </select>
                                             </td>
@@ -88,6 +89,10 @@
                                     <br />
                                     @if($errors->has('phone'))
                                         <span class="error-message"> * {{ $errors->first('phone') }} </span>
+                                    @endif
+                                    <br />
+                                    @if($errors->has('position'))
+                                        <span class="error-message"> * {{ $errors->first('position') }} </span>
                                     @endif
                                     <br />
                                     @if($errors->has('password'))
@@ -225,31 +230,11 @@
             </table>
         </span>
     </div>
-    {{-- Handle Function Position --}}
+    <script src="{{ asset('resources/js/staff/getpositions.js') }}"></script>
+    {{-- Handle Function Staff --}}
     @if (old('formType') === 'addStaffType' && $errors->any())
         <script src="{{ asset('resources/js/staff/addstaff.js') }}"></script>
     @endif
-    <script>
-        const userStoreUrl = "{{ route('manager.addStaff.getOptionPosition') }}";
-        $(document).ready(function() {
-            $('#btnFunctionNewAdd').click(function() {
-                $.ajax({
-                    url: userStoreUrl, // URL đến route Laravel
-                    method: 'GET',
-                    success: function(positions) {
-                        positions.forEach(function(position) {
-                            $('#optionPosition').append(`
-                                <option value="${position.position_code}">${position.position_name}</option>
-                            `);
-                        });
-                    },
-                    error: function(err) {
-                        console.error(err);
-                    }
-                });
-            });
-        });
-    </script>
 @endsection
 
 @section('nav-link-staffs')

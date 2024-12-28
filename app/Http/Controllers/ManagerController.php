@@ -83,8 +83,8 @@ class ManagerController extends Controller
         $staff->address = $request->address;
         $staff->workingDay = $request->workingDay;
         $staff->phone = $request->phone;
-        $staff->password = Hash::make($request->password);
         $staff->position_code = $request->position;
+        $staff->password = Hash::make($request->password);
         $staff->save();
         return redirect()->back()->with('success', 'Thêm nhân viên thành công!');
     }
