@@ -88,4 +88,28 @@ class ManagerController extends Controller
         $staff->save();
         return redirect()->back()->with('success', 'Thêm nhân viên thành công!');
     }
+    
+    public function updateStaff(StaffRequest $request, $staff)
+    {
+        dd($staff);
+        staffs::where('staff_code', $staff)->update([
+            'fullName' => $request->fullName,
+            'imgOfStaff' => $request->imgOfStaff,
+            'birthday' => $request->birthday,
+            'sex' => $request->sex,
+            'address' => $request->address,
+            'workingDay' => $request->workingDay,
+            'phone' => $request->phone,
+            'position_code' => $request->position,
+            'password' => Hash::make($request->password),
+            'updated_at' => Carbon::now('Asia/Ho_Chi_Minh'),
+        ]);
+        return redirect()->back()->with('success', 'Cập nhật thành công!');
+    }
+
+    public function deleteStaff($staff)
+    {
+        staffs::where('staff_code', $staff)->delete();
+        return redirect()->back()->with('success', 'Xóa nhân viên thành công!');
+    }
 }

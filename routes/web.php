@@ -38,6 +38,8 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
                 Route::get('/', [ManagerController::class, 'getStaff'])->name('manager.staff');
                 Route::post('addStaff', [ManagerController::class, 'addStaff'])->name('manager.addStaff');
                 Route::get('/addStaff/getOptionPosition', [ManagerController::class, 'getOptionPosition'])->name('manager.addStaff.getOptionPosition');
+                Route::put('updateStaff/{staff_code}', [ManagerController::class, 'updateStaff'])->name('manager.updateStaff');
+                Route::get('deleteStaff/{staff_code}', [ManagerController::class, 'deleteStaff'])->name('manager.deleteStaff');
             });
         });
         /*Staffs*/

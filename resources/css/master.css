@@ -58,6 +58,9 @@
 .seeMore{
     text-align: left;
 }
+.btnFunction{
+    margin-top: 2em;
+}
 #simplePaginate{
     float: right;
 }

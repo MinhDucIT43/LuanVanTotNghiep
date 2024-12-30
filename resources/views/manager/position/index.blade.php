@@ -65,13 +65,13 @@
                             <td class="specificContents">{{ number_format($position->salary) }} VNĐ</td>
                             <td>
                                 <span id="entireUpdatePosition">
-                                    <button type="button" class="btn updatePosition specificContents" data-bs-toggle="modal" data-bs-target="#updatePosition">
+                                    <button type="button" class="btn updatePosition specificContents" data-bs-toggle="modal" data-bs-target="#updatePosition{{ $position->position_code }}">
                                         <i class="fas fa-tools fa-lg" style="color: #FFD43B; margin-right: 1em;"></i>
                                     </button>
-                                    <div class="modal fade" id="updatePosition" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" aria-labelledby="updatePositionLabel" aria-hidden="true">
+                                    <div class="modal fade" id="updatePosition{{ $position->position_code }}" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" aria-labelledby="updatePositionLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
-                                                <div class="modal-header"><strong><h3 class="modal-title" id="updatePositionLabel">Sửa chức vụ</h3></strong></div>
+                                                <div class="modal-header"><strong><h3 class="modal-title" id="updatePositionLabel{{ $position->position_code }}">Sửa chức vụ</h3></strong></div>
                                                 <div class="modal-body">
                                                     <form id="formUpdatePosition" method="post" action="{{ route('manager.updatePosition', $position->position_code) }}">
                                                         @csrf
@@ -87,7 +87,7 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary closeModal" data-bs-dismiss="modal">Close</button>
-                                                            <button type="submit" form="formUpdatePosition" class="btn btn-primary">Sửa</button>
+                                                            <button type="submit" class="btn btn-primary">Sửa</button>
                                                         </div>
                                                     </form>
                                                     @if(old('formType') === 'updatePositionType' && $errors->any())
@@ -107,10 +107,10 @@
                                     </div>
                                 </span>
                                 <span id="entireDeletePosition">
-                                    <button type="button" class="btn deletePosition specificContents" data-bs-toggle="modal" data-bs-target="#deletePosition">
+                                    <button type="button" class="btn deletePosition specificContents" data-bs-toggle="modal" data-bs-target="#deletePosition{{ $position->position_code }}">
                                         <i class="fas fa-times fa-lg" style="color: #ff0000;"></i>
                                     </button>
-                                    <div class="modal fade" id="deletePosition" tabindex="-1" aria-labelledby="deletePositionLabel" aria-hidden="true">
+                                    <div class="modal fade" id="deletePosition{{ $position->position_code }}" tabindex="-1" aria-labelledby="deletePositionLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">

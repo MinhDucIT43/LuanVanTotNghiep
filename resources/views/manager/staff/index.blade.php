@@ -12,9 +12,7 @@
             <div class="modal fade" id="addStaff" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" aria-labelledby="addStaffLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <strong><h3 class="modal-title" id="addStaffLabel">Thêm nhân viên</h3></strong>
-                        </div>
+                        <div class="modal-header"><strong><h3 class="modal-title" id="addStaffLabel">Thêm nhân viên</h3></strong></div>
                         <div class="modal-body">
                             <form id="formAddStaff" method="post" action="{{ route('manager.addStaff') }}" enctype="multipart/form-data">
                                 @csrf
@@ -124,13 +122,11 @@
                     @foreach ($getStaffs as $staff)
                         <tr>
                             <td class="specificContents" style="padding-left: 1em"></td>
-                            <td class="specificContents"><img
-                                    src="{{ asset('resources/images/manager/staffs/' . $staff->imgOfStaff) }}"
-                                    alt="Ảnh nhân viên {{ $staff->fullName }}" width="100" height="100"></td>
-                            <td class="specificContents">{{ $staff->fullName }}</td>
                             <td class="specificContents">
-                                {{ App\Models\positions::where('position_code', $staff['position_code'])->value('position_name') }}
+                                <img src="{{ asset('resources/images/manager/staffs/' . $staff->imgOfStaff) }}" alt="Ảnh nhân viên {{ $staff->fullName }}" width="100" height="100">
                             </td>
+                            <td class="specificContents">{{ $staff->fullName }}</td>
+                            <td class="specificContents">{{ App\Models\positions::where('position_code', $staff['position_code'])->value('position_name') }}</td>
                             <td class="specificContents">{{ $staff->phone }}</td>
                             <td class="specificContents">
                                 @if ($staff->status == 1)
@@ -140,84 +136,144 @@
                                 @endif
                             </td>
                             <td class="specificContents">
-                                <button type="button" class="btn btn-info seeMore" data-bs-toggle="modal"
-                                    data-bs-target="#seeMore{{ $staff->staff_code }}">xem thêm</button>
-                                <div class="modal fade" id="seeMore{{ $staff->staff_code }}" tabindex="-1"
-                                    aria-labelledby="seeMoreLabel{{ $staff->staff_code }}" aria-hidden="true">
+                                <button type="button" class="btn btn-info seeMore" data-bs-toggle="modal" data-bs-target="#seeMore">xem thêm</button>
+                                <div class="modal fade" id="seeMore" tabindex="-1" aria-labelledby="seeMoreLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <strong>{{ $staff->fullName }}</strong>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                 <p class="seeMore"><strong>Giới tính:</strong> {{ $staff->sex }}</p>
-                                                <p class="seeMore"><strong>Ngày sinh:</strong>
-                                                    {{ date('d/m/Y', strtotime($staff->birthday)) }}</p>
+                                                <p class="seeMore"><strong>Ngày sinh:</strong>{{ date('d/m/Y', strtotime($staff->birthday)) }}</p>
                                                 <p class="seeMore"><strong>Địa chỉ:</strong> {{ $staff->address }}</p>
-                                                <p class="seeMore"><strong>Ngày vào làm:</strong>
-                                                    {{ date('d/m/Y', strtotime($staff->workingDay)) }}</p>
+                                                <p class="seeMore"><strong>Ngày vào làm:</strong>{{ date('d/m/Y', strtotime($staff->workingDay)) }}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </td>
-                            <td class="specificContents">
+                            <td>
                                 <span id="entireUpdateStaff">
-                                    <button type="button" class="btn updateStaff specificContents"
-                                        data-bs-toggle="modal" data-bs-target="#updateStaff{{ $staff->staff_code }}"><i
-                                            class="fas fa-tools fa-lg"
-                                            style="color: #FFD43B; margin-right: 1em;"></i></button>
-                                    <div class="modal fade" id="updateStaff{{ $staff->staff_code }}" tabindex="-1"
-                                        aria-labelledby="updateStaffLabel{{ $staff->staff_code }}" aria-hidden="true">
-                                        <div class="modal-dialog">
+                                    <button type="button" class="btn updateStaff btnFunction" data-bs-toggle="modal" data-bs-target="#updateStaff">
+                                        <i class="fas fa-tools fa-lg" style="color: #FFD43B; margin-right: 1em;"></i>
+                                    </button>
+                                    <div class="modal fade" id="updateStaff" tabindex="-1" aria-labelledby="updateStaffLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <strong>
-                                                        <h3 class="modal-title"
-                                                            id="updateStaffLabel{{ $staff->staff_code }}">
-                                                            Sửa thông tin nhân viên
-                                                        </h3>
-                                                    </strong>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
+                                                    <strong><h3 class="modal-title" id="updateStaffLabel">Sửa thông tin nhân viên</h3></strong>
+                                                    <img src="{{ asset('resources/images/manager/staffs/' . $staff->imgOfStaff) }}" alt="Ảnh nhân viên {{ $staff->fullName }}" width="100" height="100">
                                                 </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Sửa</button>
+                                                <div class="modal-body">
+                                                    <form id="formUpdateStaff" method="post" action="{{ route('manager.updateStaff', $staff->staff_code) }}" enctype="multipart/form-data">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <input type="hidden" id="formType" name="formType" value="updateStaffType">
+                                                        <table>
+                                                            <div class="form-group" id="top-form">
+                                                                <tr>
+                                                                    <td><strong><label for="fullName">Họ và tên:</label></strong></td>
+                                                                    <td><input type="text" name="fullName" id="fullName" class="form-control" placeholder="Nhập họ và tên" value="{{ old('fullName', $staff->fullName) }}" autofocus></td>
+                                                                    <td><strong><label for="imgOfStaff">Ảnh nhân viên:</label></strong></td>
+                                                                    <td>
+                                                                        <input class="form-control" type="file" id="imgOfStaff" name="imgOfStaff">
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong><label for="birthday">Năm sinh:</label></strong></td>
+                                                                    <td><input type="date" id="birthday" name="birthday" value="{{ old('birthday', $staff->birthday) }}"></td>
+                                                                    <td><strong><label for="sex">Giới tính:</label></strong></td>
+                                                                    <td>
+                                                                        <input type="radio" name="sex" id="sexMale" value="Nam" {{ old('sex') == 'Nam' ? 'checked' : '' }}>Nam
+                                                                        <input type="radio" name="sex" id="sexfemale" value="Nữ" {{ old('sex') == 'Nữ' ? 'checked' : '' }}>Nữ
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong><label for="address">Địa chỉ:</label></strong></td>
+                                                                    <td><textarea name="address" id="address" cols="21" rows="6" placeholder="Nhập địa chỉ nhân viên">{{ old('address') }}</textarea></td>
+                                                                    <td><strong><label for="workingDay">Ngày vào làm:</label></strong></td>
+                                                                    <td><input type="date" id="workingDay" name="workingDay" value="{{ old('workingDay') }}"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong><label for="phone">Số điện thoại:</label></strong></td>
+                                                                    <td><input type="text" name="phone" id="phone" class="form-control" placeholder="Nhập số điện thoại" value="{{ old('phone') }}"></td>
+                                                                    <td><strong><label for="position">Chức vụ:</label></strong></td>
+                                                                    <td>
+                                                                        <select name="position" id="optionPosition" class="form-select" aria-label="Default select example">
+                                                                            {{-- Hiển thị dữ liệu thông qua Ajax --}}
+                                                                        </select>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong><label for="password">Mật khẩu:</label></strong></td>
+                                                                    <td><input type="password" name="password" id="password" class="form-control" placeholder="Nhập mật khẩu" value="{{ old('password') }}"></td>
+                                                                </tr>
+                                                            </div>
+                                                        </table>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Sửa</button>
+                                                        </div>
+                                                    </form>
+                                                    @if(old('formType') === 'addStaffType' && $errors->any())
+                                                        <div class="error-messages">
+                                                            @if($errors->has('fullName'))
+                                                                <span class="error-message"> * {{ $errors->first('fullName') }} </span>
+                                                            @endif
+                                                            <br />
+                                                            @if($errors->has('imgOfStaff'))
+                                                                <span class="error-message"> * {{ $errors->first('imgOfStaff') }} </span>
+                                                            @endif
+                                                            <br />
+                                                            @if($errors->has('birthday'))
+                                                                <span class="error-message"> * {{ $errors->first('birthday') }} </span>
+                                                            @endif
+                                                            <br />
+                                                            @if($errors->has('address'))
+                                                                <span class="error-message"> * {{ $errors->first('address') }} </span>
+                                                            @endif
+                                                            <br />
+                                                            @if($errors->has('workingDay'))
+                                                                <span class="error-message"> * {{ $errors->first('workingDay') }} </span>
+                                                            @endif
+                                                            <br />
+                                                            @if($errors->has('phone'))
+                                                                <span class="error-message"> * {{ $errors->first('phone') }} </span>
+                                                            @endif
+                                                            <br />
+                                                            @if($errors->has('position'))
+                                                                <span class="error-message"> * {{ $errors->first('position') }} </span>
+                                                            @endif
+                                                            <br />
+                                                            @if($errors->has('password'))
+                                                                <span class="error-message"> * {{ $errors->first('password') }} </span>
+                                                            @endif
+                                                        </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </span>
                                 <span id="entireDeleteStaff">
-                                    <button type="button" class="btn deleteStaff specificContents"
-                                        data-bs-toggle="modal" data-bs-target="#deleteStaff{{ $staff->staff_code }}"><i
-                                            class="fas fa-times fa-lg" style="color: #ff0000;"></i></button>
-                                    <div class="modal fade" id="deleteStaff{{ $staff->staff_code }}" tabindex="-1"
-                                        aria-labelledby="deleteStaffLabel{{ $staff->staff_code }}" aria-hidden="true">
+                                    <button type="button" class="btn deleteStaff btnFunction" data-bs-toggle="modal" data-bs-target="#deleteStaff">
+                                        <i class="fas fa-times fa-lg" style="color: #ff0000;"></i>
+                                    </button>
+                                    <div class="modal fade" id="deleteStaff" tabindex="-1" aria-labelledby="deleteStaffLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <strong>
-                                                        <h3 class="modal-title"
-                                                            id="deleteStaffLabel{{ $staff->staff_code }}">
-                                                            Xoá nhân viên
-                                                        </h3>
-                                                    </strong>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
+                                                    <strong><h3 class="modal-title" id="deleteStaffLabel">Xoá nhân viên</h3></strong>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <p>Bạn có chắc chắn muốn xoá?</p>
-                                                </div>
+                                                <div class="modal-body"><p>Bạn có chắc chắn muốn xoá?</p></div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <a href="#"><button type="button"
-                                                            class="btn btn-danger">Xoá</button></a>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <a href="{{ route('manager.deleteStaff', ['staff_code' => $staff['staff_code']]) }}">
+                                                        <button type="button" class="btn btn-danger">Xoá</button>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
