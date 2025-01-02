@@ -9,7 +9,7 @@ use App\Http\Requests\PositionRequest;
 use App\Http\Requests\StaffRequest;
 
 use Carbon\Carbon;
-
+use Google\Cloud\Storage\Connection\Rest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -67,17 +67,11 @@ class ManagerController extends Controller
         return view('manager.staff.index', compact('getStaffs', 'positions'));
     }
 
-    public function getOptionPosition()
-    {
-        $positions = positions::all();
-        return response()->json($positions);
-    }
-
     public function addStaff(StaffRequest $request)
     {
         $staff = new staffs();
         $staff->fullName = $request->fullName;
-        $staff->imgOfStaff = $request->imgOfStaff;
+        $staff->imgOfStaff = ($request->imgOfStaff)->getClientOriginalName();
         $staff->birthday = $request->birthday;
         $staff->sex = $request->sex;
         $staff->address = $request->address;
@@ -91,19 +85,34 @@ class ManagerController extends Controller
     
     public function updateStaff(StaffRequest $request, $staff)
     {
-        dd($staff);
-        staffs::where('staff_code', $staff)->update([
-            'fullName' => $request->fullName,
-            'imgOfStaff' => $request->imgOfStaff,
-            'birthday' => $request->birthday,
-            'sex' => $request->sex,
-            'address' => $request->address,
-            'workingDay' => $request->workingDay,
-            'phone' => $request->phone,
-            'position_code' => $request->position,
-            'password' => Hash::make($request->password),
-            'updated_at' => Carbon::now('Asia/Ho_Chi_Minh'),
-        ]);
+        // staffs::where('staff_code', $staff)->update([
+        //     'fullName' => $request->fullName,
+        //     'imgOfStaff' => $request->imgOfStaff,
+        //     'birthday' => $request->birthday,
+        //     'sex' => $request->sex,
+        //     'address' => $request->address,
+        //     'workingDay' => $request->workingDay,
+        //     'phone' => $request->phone,
+        //     'position_code' => $request->position,
+        //     'password' => Hash::make($request->password),
+        //     'updated_at' => Carbon::now('Asia/Ho_Chi_Minh'),
+        // ]);
+        $staff = staffs::findOrFail($staff);
+        $staff->fullName = $request->fullName;
+        if(!empty($request->imgOfStaff)){
+            $staff->imgOfStaff = ($request->imgOfStaff)->getClientOriginalName();
+        }
+        $staff->birthday = $request->birthday;
+        $staff->sex = $request->sex;
+        $staff->address = $request->address;
+        $staff->workingDay = $request->workingDay;
+        $staff->phone = $request->phone;
+        $staff->position_code = $request->position;
+        if(!empty($request->password)){
+            $staff->password = Hash::make($request->password);
+        }
+        $staff->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
+        $staff->save();
         return redirect()->back()->with('success', 'Cập nhật thành công!');
     }
 

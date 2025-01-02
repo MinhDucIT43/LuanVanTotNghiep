@@ -8,7 +8,7 @@
     <div class="contentFunction">
         <h2 class="title-assignment">Nhân viên</h2>
         <span id="entireAddStaff">
-            <button type="button" id="btnFunctionNewAdd" class="btn btn-primary functionNewAdd" data-bs-toggle="modal" data-bs-target="#addStaff" onclick="getPositions()"> Thêm nhân viên</button>
+            <button type="button" id="btnFunctionNewAdd" class="btn btn-primary functionNewAdd" data-bs-toggle="modal" data-bs-target="#addStaff"> Thêm nhân viên</button>
             <div class="modal fade" id="addStaff" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" aria-labelledby="addStaffLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -47,8 +47,11 @@
                                             <td><input type="text" name="phone" id="phone" class="form-control" placeholder="Nhập số điện thoại" value="{{ old('phone') }}"></td>
                                             <td><strong><label for="position">Chức vụ:</label></strong></td>
                                             <td>
-                                                <select name="position" id="optionPosition" class="form-select" aria-label="Default select example">
-                                                    {{-- Hiển thị dữ liệu thông qua Ajax --}}
+                                                <select name="position" id="position" class="form-select" aria-label="Default select example">
+                                                    <option selected hidden value="">Chọn chức vụ</option>
+                                                    @foreach(App\Models\positions::all() as $position)
+                                                        <option value="{{$position->position_code}}" @if(old('position') == $position->position_code) ? selected @endif>{{$position->position_name}}</option>
+                                                    @endforeach 
                                                 </select>
                                             </td>
                                         </tr>
@@ -59,7 +62,7 @@
                                     </div>
                                 </table>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary closeModal" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" form="formAddStaff" class="btn btn-primary">Thêm</button>
                                 </div>
                             </form>
@@ -136,8 +139,8 @@
                                 @endif
                             </td>
                             <td class="specificContents">
-                                <button type="button" class="btn btn-info seeMore" data-bs-toggle="modal" data-bs-target="#seeMore">xem thêm</button>
-                                <div class="modal fade" id="seeMore" tabindex="-1" aria-labelledby="seeMoreLabel" aria-hidden="true">
+                                <button type="button" class="btn btn-info seeMore" data-bs-toggle="modal" data-bs-target="#seeMore{{$staff->staff_code}}">xem thêm</button>
+                                <div class="modal fade" id="seeMore{{$staff->staff_code}}" tabindex="-1" aria-labelledby="seeMoreLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -156,14 +159,14 @@
                             </td>
                             <td>
                                 <span id="entireUpdateStaff">
-                                    <button type="button" class="btn updateStaff btnFunction" data-bs-toggle="modal" data-bs-target="#updateStaff">
+                                    <button type="button" id="btnFunctionUpdateStaff" class="btn updateStaff btnFunction" data-bs-toggle="modal" data-bs-target="#updateStaff{{ $staff->staff_code }}">
                                         <i class="fas fa-tools fa-lg" style="color: #FFD43B; margin-right: 1em;"></i>
                                     </button>
-                                    <div class="modal fade" id="updateStaff" tabindex="-1" aria-labelledby="updateStaffLabel" aria-hidden="true">
+                                    <div class="modal fade" id="updateStaff{{ $staff->staff_code }}" tabindex="-1" aria-labelledby="updateStaffLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <strong><h3 class="modal-title" id="updateStaffLabel">Sửa thông tin nhân viên</h3></strong>
+                                                    <strong><h3 class="modal-title" id="updateStaffLabel">Sửa thông tin nhân viên {{$staff->fullName}}</h3></strong>
                                                     <img src="{{ asset('resources/images/manager/staffs/' . $staff->imgOfStaff) }}" alt="Ảnh nhân viên {{ $staff->fullName }}" width="100" height="100">
                                                 </div>
                                                 <div class="modal-body">
@@ -182,28 +185,34 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td><strong><label for="birthday">Năm sinh:</label></strong></td>
+                                                                    <td><strong><label for="birthday">Năm sinh:</label></strong>(mm/dd/yyyy)</td>
                                                                     <td><input type="date" id="birthday" name="birthday" value="{{ old('birthday', $staff->birthday) }}"></td>
                                                                     <td><strong><label for="sex">Giới tính:</label></strong></td>
                                                                     <td>
-                                                                        <input type="radio" name="sex" id="sexMale" value="Nam" {{ old('sex') == 'Nam' ? 'checked' : '' }}>Nam
-                                                                        <input type="radio" name="sex" id="sexfemale" value="Nữ" {{ old('sex') == 'Nữ' ? 'checked' : '' }}>Nữ
+                                                                        <input type="radio" name="sex" id="sexMale" value="Nam" @if($staff->sex === 'Nam') ? checked='checked' @endif>Nam
+                                                                        <input type="radio" name="sex" id="sexfemale" value="Nữ" @if($staff->sex === 'Nữ') ? checked='checked' @endif>Nữ
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td><strong><label for="address">Địa chỉ:</label></strong></td>
-                                                                    <td><textarea name="address" id="address" cols="21" rows="6" placeholder="Nhập địa chỉ nhân viên">{{ old('address') }}</textarea></td>
-                                                                    <td><strong><label for="workingDay">Ngày vào làm:</label></strong></td>
-                                                                    <td><input type="date" id="workingDay" name="workingDay" value="{{ old('workingDay') }}"></td>
+                                                                    <td><textarea name="address" id="address" cols="21" rows="6" placeholder="Nhập địa chỉ nhân viên">{{ old('address', $staff->address) }}</textarea></td>
+                                                                    <td><strong><label for="workingDay">Ngày vào làm:</label></strong>(mm/dd/yyyy)</td>
+                                                                    <td><input type="date" id="workingDay" name="workingDay" value="{{ old('workingDay', $staff->workingDay) }}"></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td><strong><label for="phone">Số điện thoại:</label></strong></td>
-                                                                    <td><input type="text" name="phone" id="phone" class="form-control" placeholder="Nhập số điện thoại" value="{{ old('phone') }}"></td>
+                                                                    <td><input type="text" name="phone" id="phone" class="form-control" placeholder="Nhập số điện thoại" value="{{ old('phone', $staff->phone) }}"></td>
                                                                     <td><strong><label for="position">Chức vụ:</label></strong></td>
                                                                     <td>
-                                                                        <select name="position" id="optionPosition" class="form-select" aria-label="Default select example">
-                                                                            {{-- Hiển thị dữ liệu thông qua Ajax --}}
+                                                                        <select name="position" id="position" class="form-select" aria-label="Default select example">
+                                                                            <option selected hidden value="">Chọn chức vụ</option>
+                                                                            @foreach(App\Models\positions::all() as $position)
+                                                                                @foreach(App\Models\positions::where('position_code',$staff->position_code)->get() as $positionOfStaff)
+                                                                                    <option value="{{$position->position_code}}" @if($positionOfStaff->position_code == $position->position_code or old('position') == $position->position_code) ? selected @endif>{{$position->position_name}}</option>
+                                                                                @endforeach
+                                                                            @endforeach
                                                                         </select>
+                                                                        <p>{{old('position')}}</p>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -213,11 +222,11 @@
                                                             </div>
                                                         </table>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-secondary closeModal" data-bs-dismiss="modal">Close</button>
                                                             <button type="submit" class="btn btn-primary">Sửa</button>
                                                         </div>
                                                     </form>
-                                                    @if(old('formType') === 'addStaffType' && $errors->any())
+                                                    @if(old('formType') === 'updateStaffType' && $errors->any())
                                                         <div class="error-messages">
                                                             @if($errors->has('fullName'))
                                                                 <span class="error-message"> * {{ $errors->first('fullName') }} </span>
@@ -286,11 +295,14 @@
             </table>
         </span>
     </div>
-    <script src="{{ asset('resources/js/staff/getpositions.js') }}"></script>
     {{-- Handle Function Staff --}}
     @if (old('formType') === 'addStaffType' && $errors->any())
         <script src="{{ asset('resources/js/staff/addstaff.js') }}"></script>
     @endif
+    @if (old('formType') === 'updateStaffType' && $errors->any())
+        <script src="{{ asset('resources/js/staff/updatestaff.js') }}"></script>
+    @endif
+    <script src="{{ asset('resources/js/master/reloadafterclosemodal.js') }}"></script>
 @endsection
 
 @section('nav-link-staffs')
