@@ -111,6 +111,7 @@ class ManagerController extends Controller
         if(!empty($request->password)){
             $staff->password = Hash::make($request->password);
         }
+        $staff->status = $request->status;
         $staff->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
         $staff->save();
         return redirect()->back()->with('success', 'Cập nhật thành công!');

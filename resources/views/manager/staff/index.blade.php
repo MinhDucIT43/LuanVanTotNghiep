@@ -126,7 +126,7 @@
                         <tr>
                             <td class="specificContents" style="padding-left: 1em"></td>
                             <td class="specificContents">
-                                <img src="{{ asset('resources/images/manager/staffs/' . $staff->imgOfStaff) }}" alt="Ảnh nhân viên {{ $staff->fullName }}" width="100" height="100">
+                                <img id="imgOfStaff" src="{{ asset('resources/images/manager/staffs/' . $staff->imgOfStaff) }}" alt="Ảnh nhân viên {{ $staff->fullName }}" width="100" height="100">
                             </td>
                             <td class="specificContents">{{ $staff->fullName }}</td>
                             <td class="specificContents">{{ App\Models\positions::where('position_code', $staff['position_code'])->value('position_name') }}</td>
@@ -162,12 +162,11 @@
                                     <button type="button" id="btnFunctionUpdateStaff" class="btn updateStaff btnFunction" data-bs-toggle="modal" data-bs-target="#updateStaff{{ $staff->staff_code }}">
                                         <i class="fas fa-tools fa-lg" style="color: #FFD43B; margin-right: 1em;"></i>
                                     </button>
-                                    <div class="modal fade" id="updateStaff{{ $staff->staff_code }}" tabindex="-1" aria-labelledby="updateStaffLabel" aria-hidden="true">
+                                    <div class="modal fade" id="updateStaff{{ $staff->staff_code }}" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" aria-labelledby="updateStaffLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <strong><h3 class="modal-title" id="updateStaffLabel">Sửa thông tin nhân viên {{$staff->fullName}}</h3></strong>
-                                                    <img src="{{ asset('resources/images/manager/staffs/' . $staff->imgOfStaff) }}" alt="Ảnh nhân viên {{ $staff->fullName }}" width="100" height="100">
+                                                    <strong><h3 class="modal-title" id="updateStaffLabel{{$staff->staff_code}}">{{old('imgOldOfStaff')}}Sửa thông tin nhân viên {{old('fullName',$staff->fullName)}}</h3></strong>
                                                 </div>
                                                 <div class="modal-body">
                                                     <form id="formUpdateStaff" method="post" action="{{ route('manager.updateStaff', $staff->staff_code) }}" enctype="multipart/form-data">
@@ -181,6 +180,7 @@
                                                                     <td><input type="text" name="fullName" id="fullName" class="form-control" placeholder="Nhập họ và tên" value="{{ old('fullName', $staff->fullName) }}" autofocus></td>
                                                                     <td><strong><label for="imgOfStaff">Ảnh nhân viên:</label></strong></td>
                                                                     <td>
+                                                                        <input type="hidden" id="imgOldOfStaff" name="imgOldOfStaff" value="{{$staff->imgOfStaff}}" />
                                                                         <input class="form-control" type="file" id="imgOfStaff" name="imgOfStaff">
                                                                     </td>
                                                                 </tr>
@@ -189,8 +189,8 @@
                                                                     <td><input type="date" id="birthday" name="birthday" value="{{ old('birthday', $staff->birthday) }}"></td>
                                                                     <td><strong><label for="sex">Giới tính:</label></strong></td>
                                                                     <td>
-                                                                        <input type="radio" name="sex" id="sexMale" value="Nam" @if($staff->sex === 'Nam') ? checked='checked' @endif>Nam
-                                                                        <input type="radio" name="sex" id="sexfemale" value="Nữ" @if($staff->sex === 'Nữ') ? checked='checked' @endif>Nữ
+                                                                        <input type="radio" name="sex" id="sexMale" value="Nam" @if($staff->sex == 'Nam' or old('sex') == 'Nam') ? checked='checked' @endif>Nam
+                                                                        <input type="radio" name="sex" id="sexFemale" value="Nữ" @if($staff->sex == 'Nữ' or old('sex') == 'Nữ') ? checked='checked' @endif>Nữ
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -218,6 +218,11 @@
                                                                 <tr>
                                                                     <td><strong><label for="password">Mật khẩu:</label></strong></td>
                                                                     <td><input type="password" name="password" id="password" class="form-control" placeholder="Nhập mật khẩu" value="{{ old('password') }}"></td>
+                                                                    <td><strong><label for="status">Trạng thái:</label></strong></td>
+                                                                    <td>
+                                                                        <input type="radio" name="status" id="Working" value="1" @if($staff->status == '1' or old('status') == '1') ? checked='checked' @endif>Còn làm việc
+                                                                        <input type="radio" name="status" id="Retired" value="0" @if($staff->status == '0' or old('status') == '0') ? checked='checked' @endif>Đã nghĩ
+                                                                    </td>
                                                                 </tr>
                                                             </div>
                                                         </table>
