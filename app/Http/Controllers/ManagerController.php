@@ -62,9 +62,8 @@ class ManagerController extends Controller
     // Manager Staff
     public function getStaff()
     {
-        $getStaffs = staffs::orderBy('staff_code', 'desc')->get();
-        $positions = positions::all();
-        return view('manager.staff.index', compact('getStaffs', 'positions'));
+        $getStaffs = staffs::orderBy('staff_code', 'desc')->simplePaginate(3);
+        return view('manager.staff.index', compact('getStaffs'));
     }
 
     public function addStaff(StaffRequest $request)

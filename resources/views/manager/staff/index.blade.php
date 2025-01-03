@@ -297,6 +297,9 @@
                 </tbody>
             </table>
         </span>
+        <span id="simplePaginate">
+            {{ $getStaffs->links() }}
+        </span>
     </div>
     {{-- Handle Function Staff --}}
     @if (old('formType') === 'addStaffType' && $errors->any())
