@@ -189,8 +189,8 @@
                                                                     <td><input type="date" id="birthday" name="birthday" value="{{ old('birthday', $staff->birthday) }}"></td>
                                                                     <td><strong><label for="sex">Giới tính:</label></strong></td>
                                                                     <td>
-                                                                        <input type="radio" name="sex" id="sexMale" value="Nam" @if($staff->sex == 'Nam' or old('sex') == 'Nam') ? checked='checked' @endif>Nam
-                                                                        <input type="radio" name="sex" id="sexFemale" value="Nữ" @if($staff->sex == 'Nữ' or old('sex') == 'Nữ') ? checked='checked' @endif>Nữ
+                                                                        <input type="radio" name="sex" id="sexMale" value="Nam" @if(old('sex', $staff->sex) == 'Nam') ? checked='checked' @endif>Nam
+                                                                        <input type="radio" name="sex" id="sexFemale" value="Nữ" @if(old('sex', $staff->sex) == 'Nữ') ? checked='checked' @endif>Nữ
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -208,11 +208,10 @@
                                                                             <option selected hidden value="">Chọn chức vụ</option>
                                                                             @foreach(App\Models\positions::all() as $position)
                                                                                 @foreach(App\Models\positions::where('position_code',$staff->position_code)->get() as $positionOfStaff)
-                                                                                    <option value="{{$position->position_code}}" @if($positionOfStaff->position_code == $position->position_code or old('position') == $position->position_code) ? selected @endif>{{$position->position_name}}</option>
+                                                                                    <option value="{{$position->position_code}}" @if(old('position', $positionOfStaff->position_code) == $position->position_code) ? selected @endif>{{$position->position_name}}</option>
                                                                                 @endforeach
                                                                             @endforeach
                                                                         </select>
-                                                                        <p>{{old('position')}}</p>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -220,8 +219,8 @@
                                                                     <td><input type="password" name="password" id="password" class="form-control" placeholder="Nhập mật khẩu" value="{{ old('password') }}"></td>
                                                                     <td><strong><label for="status">Trạng thái:</label></strong></td>
                                                                     <td>
-                                                                        <input type="radio" name="status" id="Working" value="1" @if($staff->status == '1' or old('status') == '1') ? checked='checked' @endif>Còn làm việc
-                                                                        <input type="radio" name="status" id="Retired" value="0" @if($staff->status == '0' or old('status') == '0') ? checked='checked' @endif>Đã nghĩ
+                                                                        <input type="radio" name="status" id="working" value="1" @if(old('status', $staff->status) == '1') ? checked='checked' @endif>Còn làm việc
+                                                                        <input type="radio" name="status" id="retired" value="0" @if(old('status', $staff->status) == '0') ? checked='checked' @endif>Đã nghĩ
                                                                     </td>
                                                                 </tr>
                                                             </div>
