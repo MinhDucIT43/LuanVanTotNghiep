@@ -126,7 +126,7 @@
                         <tr>
                             <td class="specificContents" style="padding-left: 1em"></td>
                             <td class="specificContents">
-                                <img id="imgOfStaff" src="{{ asset('resources/images/manager/staffs/' . $staff->imgOfStaff) }}" alt="Ảnh nhân viên {{ $staff->fullName }}" width="100" height="100">
+                                <img id="imgOfStaff" src="{{ asset('resources/images/manager/staffs/' . $staff->imgOfStaff) }}" alt="Ảnh nhân viên {{ $staff->fullName }}" width="100" height="100" style="object-fit: cover;">
                             </td>
                             <td class="specificContents">{{ $staff->fullName }}</td>
                             <td class="specificContents">{{ App\Models\positions::where('position_code', $staff['position_code'])->value('position_name') }}</td>
@@ -144,7 +144,7 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <strong>{{ $staff->fullName }}</strong>
+                                                Nhân viên:<strong>{{ $staff->fullName }}</strong>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
@@ -166,7 +166,7 @@
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <strong><h3 class="modal-title" id="updateStaffLabel{{$staff->staff_code}}">{{old('imgOldOfStaff')}}Sửa thông tin nhân viên {{old('fullName',$staff->fullName)}}</h3></strong>
+                                                    <strong><h3 class="modal-title" id="updateStaffLabel{{$staff->staff_code}}">Sửa thông tin nhân viên {{old('fullName',$staff->fullName)}}</h3></strong>
                                                 </div>
                                                 <div class="modal-body">
                                                     <form id="formUpdateStaff" method="post" action="{{ route('manager.updateStaff', $staff->staff_code) }}" enctype="multipart/form-data">
@@ -180,7 +180,6 @@
                                                                     <td><input type="text" name="fullName" id="fullName" class="form-control" placeholder="Nhập họ và tên" value="{{ old('fullName', $staff->fullName) }}" autofocus></td>
                                                                     <td><strong><label for="imgOfStaff">Ảnh nhân viên:</label></strong></td>
                                                                     <td>
-                                                                        <input type="hidden" id="imgOldOfStaff" name="imgOldOfStaff" value="{{$staff->imgOfStaff}}" />
                                                                         <input class="form-control" type="file" id="imgOfStaff" name="imgOfStaff">
                                                                     </td>
                                                                 </tr>
