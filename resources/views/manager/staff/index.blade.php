@@ -124,7 +124,7 @@
                 <tbody>
                     @foreach ($getStaffs as $staff)
                         <tr>
-                            <td class="specificContents" style="padding-left: 1em"></td>
+                            <td class="specificContents" style="padding-left: 1em">{{ ($getStaffs->currentPage() - 1) * $getStaffs->perPage() + $loop->index + 1 }}</td>
                             <td class="specificContents">
                                 <img id="imgOfStaff" src="{{ asset('resources/images/manager/staffs/' . $staff->imgOfStaff) }}" alt="Ảnh nhân viên {{ $staff->fullName }}" width="100" height="100" style="object-fit: cover;">
                             </td>
@@ -167,12 +167,15 @@
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <strong><h3 class="modal-title" id="updateStaffLabel{{$staff->staff_code}}">Sửa thông tin nhân viên {{old('fullName',$staff->fullName)}}</h3></strong>
+                                                    <?php $imgOfStaffUpdate = App\Models\staffs::where('staff_code',old('staff_code',$staff->staff_code))->value('imgOfStaff') ?>
+                                                    <img id="imgOfStaffUpdate" name="imgOfStaffUpdate" src="{{ asset('resources/images/manager/staffs/' . $imgOfStaffUpdate) }}" alt="Ảnh của nhân viên {{old('fullName',$staff->fullName)}}" width="100" height="100" style="object-fit: cover;">
                                                 </div>
                                                 <div class="modal-body">
                                                     <form id="formUpdateStaff" method="post" action="{{ route('manager.updateStaff', $staff->staff_code) }}" enctype="multipart/form-data">
                                                         @csrf
                                                         @method('PUT')
                                                         <input type="hidden" id="formType" name="formType" value="updateStaffType">
+                                                        <input type="hidden" name="staff_code" value="{{$staff->staff_code}}"> {{-- Để giữ lại hình ảnh cũ khi submit có validation rule --}}
                                                         <table>
                                                             <div class="form-group" id="top-form">
                                                                 <tr>

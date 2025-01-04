@@ -25,7 +25,7 @@ class StaffRequest extends FormRequest
         $staff_code = $this->route('staff_code');
         $rules = [
             'fullName' => 'required',
-            'imgOfStaff' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'imgOfStaff' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'birthday' => 'required|before:-18 years',
             'address' => 'required',
             'workingDay' => 'required',

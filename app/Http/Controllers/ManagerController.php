@@ -100,6 +100,8 @@ class ManagerController extends Controller
         $staff->fullName = $request->fullName;
         if(!empty($request->imgOfStaff)){
             $staff->imgOfStaff = ($request->imgOfStaff)->getClientOriginalName();
+        }else{
+            $staff->imgOfStaff = $staff->imgOfStaff;
         }
         $staff->birthday = $request->birthday;
         $staff->sex = $request->sex;
