@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\positions;
 use App\Models\staffs;
+use App\Models\typeofdish;
+use App\Models\dish;
 
 use App\Http\Requests\PositionRequest;
 use App\Http\Requests\StaffRequest;
+use App\Http\Requests\TypeOfDishRequest;
+use App\Http\Requests\DishRequest;
 
 use Carbon\Carbon;
-use Google\Cloud\Storage\Connection\Rest;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -81,26 +85,14 @@ class ManagerController extends Controller
         $staff->save();
         return redirect()->back()->with('success', 'Thêm nhân viên thành công!');
     }
-    
+
     public function updateStaff(StaffRequest $request, $staff)
     {
-        // staffs::where('staff_code', $staff)->update([
-        //     'fullName' => $request->fullName,
-        //     'imgOfStaff' => $request->imgOfStaff,
-        //     'birthday' => $request->birthday,
-        //     'sex' => $request->sex,
-        //     'address' => $request->address,
-        //     'workingDay' => $request->workingDay,
-        //     'phone' => $request->phone,
-        //     'position_code' => $request->position,
-        //     'password' => Hash::make($request->password),
-        //     'updated_at' => Carbon::now('Asia/Ho_Chi_Minh'),
-        // ]);
         $staff = staffs::findOrFail($staff);
         $staff->fullName = $request->fullName;
-        if(!empty($request->imgOfStaff)){
+        if (!empty($request->imgOfStaff)) {
             $staff->imgOfStaff = ($request->imgOfStaff)->getClientOriginalName();
-        }else{
+        } else {
             $staff->imgOfStaff = $staff->imgOfStaff;
         }
         $staff->birthday = $request->birthday;
@@ -109,7 +101,7 @@ class ManagerController extends Controller
         $staff->workingDay = $request->workingDay;
         $staff->phone = $request->phone;
         $staff->position_code = $request->position;
-        if(!empty($request->password)){
+        if (!empty($request->password)) {
             $staff->password = Hash::make($request->password);
         }
         $staff->status = $request->status;
@@ -122,5 +114,62 @@ class ManagerController extends Controller
     {
         staffs::where('staff_code', $staff)->delete();
         return redirect()->back()->with('success', 'Xóa nhân viên thành công!');
+    }
+
+    // Manager Type Of Dish
+    public function getTypeOfDish()
+    {
+        $getTypeOfDish = typeofdish::orderBy('id', 'desc')->simplePaginate(10);;
+        return view('manager.typeofdish.index', compact('getTypeOfDish'));
+    }
+
+    public function addTypeOfDish(TypeOfDishRequest $request)
+    {
+        $typeofdish = new typeofdish();
+        $typeofdish->nameTypeDish = $request->nameTypeDish;
+        $typeofdish->created_at = Carbon::now('Asia/Ho_Chi_Minh');
+        $typeofdish->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
+        $typeofdish->save();
+        return redirect()->back()->with('success', 'Thêm loại món ăn thành công!');
+    }
+
+    public function updateTypeOfDate(TypeOfDishRequest $request, $id)
+    {
+        typeofdish::where('id', $id)->update([
+            'nameTypeDish' => $request->nameTypeDish,
+            'status' => $request->status,
+            'updated_at' => Carbon::now('Asia/Ho_Chi_Minh'),
+        ]);
+        return redirect()->back()->with('success', 'Cập nhật thành công!');
+    }
+
+    public function deleteTypeOfDish($id)
+    {
+        // $checkChildTypeOfDish = typeofdish::find($id);
+        // if ($checkChildTypeOfDish->dish()->exists()) {
+        //     return redirect()->back()->with('error', 'Tồn tại món ăn thuọc loại món ăn bạn muốn xoá!');
+        // } else {
+        typeofdish::where('id', $id)->delete();
+        return redirect()->back()->with('success', 'Xóa loại món ăn thành công!');
+        // }
+    }
+
+    // Manager Dish
+    public function getDish()
+    {
+        $getDish = dish::orderBy('id', 'desc')->simplePaginate(10);;
+        return view('manager.dish.index', compact('getDish'));
+    }
+
+    public function addDish(DishRequest $request)
+    {
+        $dish = new dish();
+        $dish->nameDish = $request->nameDish;
+        $dish->price = $request->price;
+        $dish->typeofdish_id = $request->typeOfDish;
+        $dish->created_at = Carbon::now('Asia/Ho_Chi_Minh');
+        $dish->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
+        $dish->save();
+        return redirect()->back()->with('success', 'Thêm món ăn thành công!');
     }
 }

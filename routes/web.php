@@ -40,6 +40,18 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
                 Route::put('updateStaff/{staff_code}', [ManagerController::class, 'updateStaff'])->name('manager.updateStaff');
                 Route::get('deleteStaff/{staff_code}', [ManagerController::class, 'deleteStaff'])->name('manager.deleteStaff');
             });
+            Route::group(['prefix' => 'typeofdish'], function () {
+                /*Manager Type Of Dish*/
+                Route::get('/', [ManagerController::class, 'getTypeOfDish'])->name('manager.typeOfDish');
+                Route::post('addTypeOfDish', [ManagerController::class, 'addTypeOfDish'])->name('manager.addTypeOfDish');
+                Route::put('updateTypeOfDish/{id}', [ManagerController::class, 'updateTypeOfDate'])->name('manager.updateTypeOfDish');
+                Route::get('deleteTypeOfDish/{id}', [ManagerController::class, 'deleteTypeOfDish'])->name('manager.deleteTypeOfDish');
+            });
+            Route::group(['prefix' => 'dish'], function () {
+                /*Manager Dish*/
+                Route::get('/', [ManagerController::class, 'getDish'])->name('manager.dish');
+                Route::post('addDish', [ManagerController::class, 'addDish'])->name('manager.addDish');
+            });
         });
         /*Staffs*/
         Route::get('staff/index', [StaffController::class, 'index'])->name('staff.index');

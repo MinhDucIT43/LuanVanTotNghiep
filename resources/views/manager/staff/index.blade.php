@@ -12,7 +12,7 @@
             <div class="modal fade" id="addStaff" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" aria-labelledby="addStaffLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <div class="modal-header"><strong><h3 class="modal-title" id="addStaffLabel">Thêm nhân viên</h3></strong></div>
+                        <div class="modal-header"><h3 class="modal-title" id="addStaffLabel">Thêm nhân viên</h3></div>
                         <div class="modal-body">
                             <form id="formAddStaff" method="post" action="{{ route('manager.addStaff') }}" enctype="multipart/form-data">
                                 @csrf
@@ -166,7 +166,7 @@
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <strong><h3 class="modal-title" id="updateStaffLabel{{$staff->staff_code}}">Sửa thông tin nhân viên {{old('fullName',$staff->fullName)}}</h3></strong>
+                                                    <h3 class="modal-title" id="updateStaffLabel{{$staff->staff_code}}">Sửa thông tin nhân viên</h3>
                                                     <?php $imgOfStaffUpdate = App\Models\staffs::where('staff_code',old('staff_code',$staff->staff_code))->value('imgOfStaff') ?>
                                                     <img id="imgOfStaffUpdate" name="imgOfStaffUpdate" src="{{ asset('resources/images/manager/staffs/' . $imgOfStaffUpdate) }}" alt="Ảnh của nhân viên {{old('fullName',$staff->fullName)}}" width="100" height="100" style="object-fit: cover;">
                                                 </div>
@@ -273,17 +273,17 @@
                                     </div>
                                 </span>
                                 <span id="entireDeleteStaff">
-                                    <button type="button" class="btn deleteStaff btnFunction" data-bs-toggle="modal" data-bs-target="#deleteStaff">
+                                    <button type="button" class="btn deleteStaff btnFunction" data-bs-toggle="modal" data-bs-target="#deleteStaff{{$staff->staff_code}}">
                                         <i class="fas fa-times fa-lg" style="color: #ff0000;"></i>
                                     </button>
-                                    <div class="modal fade" id="deleteStaff" tabindex="-1" aria-labelledby="deleteStaffLabel" aria-hidden="true">
+                                    <div class="modal fade" id="deleteStaff{{$staff->staff_code}}" tabindex="-1" aria-labelledby="deleteStaffLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <strong><h3 class="modal-title" id="deleteStaffLabel">Xoá nhân viên</h3></strong>
+                                                    <h3 class="modal-title" id="deleteStaffLabel{{$staff->staff_code}}">Xoá nhân viên</h3>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
-                                                <div class="modal-body"><p>Bạn có chắc chắn muốn xoá?</p></div>
+                                                <div class="modal-body"><p>Bạn có chắc chắn muốn xoá nhân viên <strong>{{$staff->fullName}}</strong>?</p></div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                     <a href="{{ route('manager.deleteStaff', ['staff_code' => $staff['staff_code']]) }}">

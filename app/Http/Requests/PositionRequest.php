@@ -45,7 +45,7 @@ class PositionRequest extends FormRequest
             'positionName.unique' => "Chức vụ này đã tồn tại.",
             'salary.required' => "Vui lòng nhập lương căn bản.",
             'salary.numeric' => "Lương căn bản phải là số.",
-            'salary.gt' => "Lương căn bản không được nhỏ hơn.",
+            'salary.gt' => "Lương căn bản không được nhỏ hơn 0.",
         ];
     }
 }

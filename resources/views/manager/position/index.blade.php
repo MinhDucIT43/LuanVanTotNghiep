@@ -12,13 +12,13 @@
             <div class="modal fade" id="addPosition" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" aria-labelledby="addPositionLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header"><strong><h3 class="modal-title" id="addPositionLabel">Thêm chức vụ</h3></strong></div>
+                        <div class="modal-header"><h3 class="modal-title" id="addPositionLabel">Thêm chức vụ</h3></div>
                         <div class="modal-body">
                             <form id="formAddPosition" method="post" action="{{ route('manager.addPosition') }}">
                                 @csrf
                                 <input type="hidden" id="formType" name="formType" value="addPositionType">
                                 <div class="form-group" id="top-form">
-                                    <strong><label for="positioname">Tên chức vụ:</label></strong>
+                                    <strong><label for="positionName">Tên chức vụ:</label></strong>
                                     <input type="text" name="positionName" id="positionName" class="form-control" placeholder="Nhập tên chức vụ" value="{{ old('positionName') }}" autofocus>
                                 </div>
                                 <div class="form-group">
@@ -71,7 +71,7 @@
                                     <div class="modal fade" id="updatePosition{{ $position->position_code }}" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" aria-labelledby="updatePositionLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
-                                                <div class="modal-header"><strong><h3 class="modal-title" id="updatePositionLabel">Sửa chức vụ</h3></strong></div>
+                                                <div class="modal-header"><h3 class="modal-title" id="updatePositionLabel">Sửa chức vụ</h3></div>
                                                 <div class="modal-body">
                                                     <form id="formUpdatePosition" method="post" action="{{ route('manager.updatePosition', $position->position_code) }}">
                                                         @csrf
@@ -114,10 +114,10 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <strong><h3 class="modal-title" id="deletePositionLabel">Xoá chức vụ</h3></strong>
+                                                    <h3 class="modal-title" id="deletePositionLabel">Xoá chức vụ</h3>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
-                                                <div class="modal-body"><p>Bạn có chắc chắn muốn xoá?</p></div>
+                                                <div class="modal-body"><p>Bạn có chắc chắn muốn xoá chức vụ <strong>{{$position->position_name}}</strong>?</p></div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                     <a href="{{ route('manager.deletePosition', ['position_code' => $position['position_code']]) }}">
