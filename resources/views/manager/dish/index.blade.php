@@ -26,7 +26,7 @@
                                     <input type="text" name="price" id="price" class="form-control" placeholder="Nhập giá món ăn" value="{{ old('price') }}">
                                 </div>
                                 <div class="form-group" id="top-form">
-                                    <strong><label for="typeofdish">Chọn loại món ăn:</label></strong>
+                                    <strong><label for="typeOfDish">Chọn loại món ăn:</label></strong>
                                     <select name="typeOfDish" id="typeOfDish" class="form-select" aria-label="Default select example">
                                         <option selected hidden value="">Thuộc loại</option>
                                         @foreach(App\Models\typeofdish::all() as $typeofdish)
@@ -87,65 +87,84 @@
                             </td>
                             <td class="specificContents">{{ App\Models\typeofdish::where('id', $dish['typeofdish_id'])->value('nameTypeDish') }}</td>
                             <td>
-                                <span id="entireUpdateTypeOfDish">
-                                    <button type="button" class="btn updateTypeOfDish specificContents" data-bs-toggle="modal" data-bs-target="#updateTypeOfDish{{ $typeofdish->id }}">
+                                <span id="entireUpdateDish">
+                                    <button type="button" class="btn updateDish specificContents" data-bs-toggle="modal" data-bs-target="#updateDish{{ $dish->id }}">
                                         <i class="fas fa-tools fa-lg" style="color: #FFD43B; margin-right: 1em;"></i>
                                     </button>
-                                    {{-- <div class="modal fade" id="updateTypeOfDish{{ $typeofdish->id }}" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" aria-labelledby="updateTypeOfDishLabel" aria-hidden="true">
+                                    <div class="modal fade" id="updateDish{{ $dish->id }}" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" aria-labelledby="updateDishLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
-                                                <div class="modal-header"><h3 class="modal-title" id="updateTypeOfDishLabel">Sửa loại món ăn</h3></div>
+                                                <div class="modal-header"><h3 class="modal-title" id="updateDishLabel">Sửa món ăn</h3></div>
                                                 <div class="modal-body">
-                                                    <form id="formUpdateTypeOfDish" method="post" action="{{ route('manager.updateTypeOfDish', $typeofdish->id) }}">
+                                                    <form id="formUpdateDish" method="post" action="{{ route('manager.updateDish', $dish->id) }}">
                                                         @csrf
                                                         @method('PUT')
-                                                        <input type="hidden" id="formType" name="formType" value="updateTypeOfDishType">
+                                                        <input type="hidden" id="formType" name="formType" value="updateDishType">
                                                         <div class="form-group" id="top-form">
-                                                            <strong><label for="nameTypeDish">Tên loại món ăn:</label></strong>
-                                                            <input type="text" name="nameTypeDish" id="nameTypeDish" class="form-control" placeholder="Nhập tên loại món ăn" value="{{ old('nameTypeDish', $typeofdish->nameTypeDish) }}" autofocus>
+                                                            <strong><label for="nameDish">Tên món ăn:</label></strong>
+                                                            <input type="text" name="nameDish" id="nameDish" class="form-control" placeholder="Nhập tên món ăn" value="{{ old('nameDish', $dish->nameDish) }}" autofocus>
                                                         </div>
                                                         <div class="form-group" id="top-form">
-                                                            <strong><label for="salary">Trạng thái:</label></strong>
-                                                            <input type="radio" name="status" id="inStock" value="1" @if(old('status', $typeofdish->status) == '1') ? checked='checked' @endif>Còn hàng
-                                                            <input type="radio" name="status" id="outOfStock" value="0" @if(old('status', $typeofdish->status) == '0') ? checked='checked' @endif>Hết hàng                                                     </div>
+                                                            <strong><label for="price">Giá món ăn:</label></strong>
+                                                            <input type="text" name="price" id="price" class="form-control" placeholder="Nhập giá món ăn" value="{{ old('price', $dish->price) }}">
+                                                        </div>
+                                                        <div class="form-group" id="top-form">
+                                                            <strong><label for="typeOfDish">Chọn loại món ăn:</label></strong>
+                                                            <select name="typeOfDish" id="typeOfDish" class="form-select" aria-label="Default select example">
+                                                                <option selected hidden value="">Chọn chức vụ</option>
+                                                                @foreach(App\Models\typeofdish::all() as $typeofdish)
+                                                                    @foreach(App\Models\typeofdish::where('id',$dish->typeofdish_id)->get() as $typeOfDishSelected)
+                                                                        <option value="{{$typeofdish->id}}" @if(old('typeOfDish', $typeOfDishSelected->id) == $typeofdish->id) ? selected @endif>{{$typeofdish->nameTypeDish}}</option>
+                                                                    @endforeach
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary closeModal" data-bs-dismiss="modal">Close</button>
                                                             <button type="submit" class="btn btn-primary">Sửa</button>
                                                         </div>
                                                     </form>
-                                                    @if(old('formType') === 'updateTypeOfDishType' && $errors->any())
+                                                    @if(old('formType') === 'updateDishType' && $errors->any())
                                                         <div class="error-messages">
-                                                            @if($errors->has('nameTypeDish'))
-                                                                <span class="error-message"> * {{ $errors->first('nameTypeDish') }} </span>
+                                                            @if($errors->has('nameDish'))
+                                                                <span class="error-message"> * {{ $errors->first('nameDish') }} </span>
+                                                            @endif
+                                                            <br/>
+                                                            @if($errors->has('price'))
+                                                                <span class="error-message"> * {{ $errors->first('price') }} </span>
+                                                            @endif
+                                                            <br/>
+                                                            @if($errors->has('typeOfDish'))
+                                                                <span class="error-message"> * {{ $errors->first('typeOfDish') }} </span>
                                                             @endif
                                                         </div>
                                                     @endif
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> --}}
+                                    </div>
                                 </span>
-                                <span id="entireDeleteTypeOfDish">
-                                    <button type="button" class="btn deleteTypeOfDish specificContents" data-bs-toggle="modal" data-bs-target="#deleteTypeOfDish{{ $typeofdish->id }}">
+                                <span id="entireDeleteDish">
+                                    <button type="button" class="btn deleteDish specificContents" data-bs-toggle="modal" data-bs-target="#deleteDish{{ $dish->id }}">
                                         <i class="fas fa-times fa-lg" style="color: #ff0000;"></i>
                                     </button>
-                                    {{-- <div class="modal fade" id="deleteTypeOfDish{{ $typeofdish->id }}" tabindex="-1" aria-labelledby="deleteTypeOfDishLabel" aria-hidden="true">
+                                    <div class="modal fade" id="deleteDish{{ $dish->id }}" tabindex="-1" aria-labelledby="deleteDishLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h3 class="modal-title" id="deleteTypeOfDishLabel">Xoá loại món ăn</h3>
+                                                    <h3 class="modal-title" id="deleteDishLabel">Xoá món ăn</h3>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
-                                                <div class="modal-body"><p>Bạn có chắc chắn muốn xoá loại món ăn <strong>{{ $typeofdish->nameTypeDish }}</strong>?</p></div>
+                                                <div class="modal-body"><p>Bạn có chắc chắn muốn xoá món ăn <strong>{{ $dish->nameDish }}</strong>?</p></div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <a href="{{ route('manager.deleteTypeOfDish', ['id' => $typeofdish['id']]) }}">
+                                                    <a href="{{ route('manager.deleteDish', ['id' => $dish['id']]) }}">
                                                         <button type="button" class="btn btn-danger">Xoá</button>
                                                     </a>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> --}}
+                                    </div>
                                 </span>
                             </td>
                         </tr>
@@ -161,9 +180,9 @@
     @if (old('formType') === 'addDishType' && $errors->any())
         <script src="{{ asset('resources/js/dish/adddish.js') }}"></script>
     @endif
-    {{-- @if (old('formType') === 'updateTypeOfDishType' && $errors->any())
-        <script src="{{ asset('resources/js/typeofdish/updatetypeofdish.js') }}"></script>
-    @endif --}}
+    @if (old('formType') === 'updateDishType' && $errors->any())
+        <script src="{{ asset('resources/js/dish/updatedish.js') }}"></script>
+    @endif
     <script src="{{ asset('resources/js/master/reloadafterclosemodal.js') }}"></script>
 @endsection
 

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class DishRequest extends FormRequest
 {
@@ -21,11 +22,18 @@ class DishRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('id');
         $rules = [
-            'nameDish' => 'required|unique:dish,nameDish',
+            'nameDish' => ['required'],
             'price' => 'required|numeric|gt:-1',
             'typeOfDish' => 'required',
         ];
+
+        if($id){
+            $rules['nameDish'][] = Rule::unique('dish','nameDish')->ignore($id,'id');
+        }else{
+            $rules['nameDish'][] = Rule::unique('dish','nameDish');
+        }
 
         return $rules;
     }

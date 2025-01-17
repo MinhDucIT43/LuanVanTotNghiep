@@ -133,7 +133,7 @@ class ManagerController extends Controller
         return redirect()->back()->with('success', 'Thêm loại món ăn thành công!');
     }
 
-    public function updateTypeOfDate(TypeOfDishRequest $request, $id)
+    public function updateTypeOfDish(TypeOfDishRequest $request, $id)
     {
         typeofdish::where('id', $id)->update([
             'nameTypeDish' => $request->nameTypeDish,
@@ -145,13 +145,13 @@ class ManagerController extends Controller
 
     public function deleteTypeOfDish($id)
     {
-        // $checkChildTypeOfDish = typeofdish::find($id);
-        // if ($checkChildTypeOfDish->dish()->exists()) {
-        //     return redirect()->back()->with('error', 'Tồn tại món ăn thuọc loại món ăn bạn muốn xoá!');
-        // } else {
-        typeofdish::where('id', $id)->delete();
-        return redirect()->back()->with('success', 'Xóa loại món ăn thành công!');
-        // }
+        $checkChildTypeOfDish = typeofdish::find($id);
+        if ($checkChildTypeOfDish->dish()->exists()) {
+            return redirect()->back()->with('error', 'Tồn tại món ăn thuộc loại món ăn bạn muốn xoá!');
+        } else {
+            typeofdish::where('id', $id)->delete();
+            return redirect()->back()->with('success', 'Xóa loại món ăn thành công!');
+        }
     }
 
     // Manager Dish
@@ -171,5 +171,22 @@ class ManagerController extends Controller
         $dish->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
         $dish->save();
         return redirect()->back()->with('success', 'Thêm món ăn thành công!');
+    }
+
+    public function updateDish(DishRequest $request, $id)
+    {
+        dish::where('id', $id)->update([
+            'nameDish' => $request->nameDish,
+            'price' => $request->price,
+            'typeofdish_id' => $request->typeOfDish,
+            'updated_at' => Carbon::now('Asia/Ho_Chi_Minh'),
+        ]);
+        return redirect()->back()->with('success', 'Cập nhật thành công!');
+    }
+
+    public function deleteDish($id)
+    {
+        dish::where('id', $id)->delete();
+        return redirect()->back()->with('success', 'Xóa món ăn thành công!');
     }
 }
