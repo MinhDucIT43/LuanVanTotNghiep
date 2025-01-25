@@ -6,6 +6,7 @@ use App\Models\positions;
 use App\Models\staffs;
 use App\Models\typeofdish;
 use App\Models\dish;
+use App\Models\tickets;
 
 use App\Http\Requests\PositionRequest;
 use App\Http\Requests\StaffRequest;
@@ -189,4 +190,11 @@ class ManagerController extends Controller
         dish::where('id', $id)->delete();
         return redirect()->back()->with('success', 'Xóa món ăn thành công!');
     }
+
+        // Manager Tickets
+        public function getTicket()
+        {
+            $getTicket = tickets::orderBy('id', 'desc')->simplePaginate(10);;
+            return view('manager.ticket.index', compact('getTicket'));
+        }
 }
