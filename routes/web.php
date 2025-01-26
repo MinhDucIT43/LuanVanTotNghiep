@@ -57,6 +57,9 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
             Route::group(['prefix' => 'ticket'], function () {
                 /*Manager Tickets*/
                 Route::get('/', [ManagerController::class, 'getTicket'])->name('manager.ticket');
+                Route::post('addTicket', [ManagerController::class, 'addTicket'])->name('manager.addTicket');
+                Route::put('updateTicket/{id}', [ManagerController::class, 'updateTicket'])->name('manager.updateTicket');
+                Route::get('deleteTicket/{id}', [ManagerController::class, 'deleteTicket'])->name('manager.deleteTicket');
             });
         });
         /*Staffs*/

@@ -12,7 +12,7 @@ use App\Http\Requests\PositionRequest;
 use App\Http\Requests\StaffRequest;
 use App\Http\Requests\TypeOfDishRequest;
 use App\Http\Requests\DishRequest;
-
+use App\Http\Requests\TicketRequest;
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
@@ -191,10 +191,37 @@ class ManagerController extends Controller
         return redirect()->back()->with('success', 'Xóa món ăn thành công!');
     }
 
-        // Manager Tickets
-        public function getTicket()
-        {
-            $getTicket = tickets::orderBy('id', 'desc')->simplePaginate(10);;
-            return view('manager.ticket.index', compact('getTicket'));
-        }
+    // Manager Tickets
+    public function getTicket()
+    {
+        $getTickets = tickets::orderBy('id', 'desc')->simplePaginate(10);;
+        return view('manager.ticket.index', compact('getTickets'));
+    }
+
+    public function addTicket(TicketRequest $request)
+    {
+        $ticket = new tickets();
+        $ticket->nameTicket = $request->nameTicket;
+        $ticket->price = $request->price;
+        $ticket->created_at = Carbon::now('Asia/Ho_Chi_Minh');
+        $ticket->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
+        $ticket->save();
+        return redirect()->back()->with('success', 'Thêm vé buffet thành công!');
+    }
+
+    public function updateTicket(TicketRequest $request, $id)
+    {
+        tickets::where('id', $id)->update([
+            'nameTicket' => $request->nameTicket,
+            'price' => $request->price,
+            'updated_at' => Carbon::now('Asia/Ho_Chi_Minh'),
+        ]);
+        return redirect()->back()->with('success', 'Cập nhật thành công!');
+    }
+
+    public function deleteTicket($id)
+    {
+        tickets::where('id', $id)->delete();
+        return redirect()->back()->with('success', 'Xóa vé buffet thành công!');
+    }
 }
