@@ -120,7 +120,7 @@ class ManagerController extends Controller
     // Manager Type Of Dish
     public function getTypeOfDish()
     {
-        $getTypeOfDish = typeofdish::orderBy('id', 'desc')->simplePaginate(10);;
+        $getTypeOfDish = typeofdish::orderBy('id', 'desc')->simplePaginate(10);
         return view('manager.typeofdish.index', compact('getTypeOfDish'));
     }
 
@@ -158,7 +158,7 @@ class ManagerController extends Controller
     // Manager Dish
     public function getDish()
     {
-        $getDish = dish::orderBy('id', 'desc')->simplePaginate(10);;
+        $getDish = dish::orderBy('id', 'desc')->simplePaginate(10);
         return view('manager.dish.index', compact('getDish'));
     }
 
@@ -194,7 +194,7 @@ class ManagerController extends Controller
     // Manager Tickets
     public function getTicket()
     {
-        $getTickets = tickets::orderBy('id', 'desc')->simplePaginate(10);;
+        $getTickets = tickets::orderBy('id', 'desc')->simplePaginate(10);
         return view('manager.ticket.index', compact('getTickets'));
     }
 
@@ -223,5 +223,11 @@ class ManagerController extends Controller
     {
         tickets::where('id', $id)->delete();
         return redirect()->back()->with('success', 'Xóa vé buffet thành công!');
+    }
+
+    // Manager Tables
+    public function getTable()
+    {
+        return view('manager.table.index');
     }
 }

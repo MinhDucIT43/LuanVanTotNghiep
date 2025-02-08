@@ -61,6 +61,10 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
                 Route::put('updateTicket/{id}', [ManagerController::class, 'updateTicket'])->name('manager.updateTicket');
                 Route::get('deleteTicket/{id}', [ManagerController::class, 'deleteTicket'])->name('manager.deleteTicket');
             });
+            Route::group(['prefix' => 'table'], function () {
+                /*Manager Table*/
+                Route::get('/', [ManagerController::class, 'getTable'])->name('manager.table');
+            });
         });
         /*Staffs*/
         Route::get('staff/index', [StaffController::class, 'index'])->name('staff.index');

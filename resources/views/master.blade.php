@@ -55,8 +55,9 @@
                 <a href="{{ route('manager.position') }}" class="list-group-item list-group-item-action @yield('nav-link-positions')"><i class="fas fa-id-badge fa-lg"></i> Quản lý chức vụ</a>
                 <a href="{{ route('manager.staff') }}" class="list-group-item list-group-item-action @yield('nav-link-staffs')"><i class="fas fa-address-book fa-lg"></i> Quản lý nhân viên</a>
                 <a href="{{ route('manager.typeOfDish') }}" class="list-group-item list-group-item-action @yield('nav-link-typeofdish')"><i class="fas fa-fish"></i> Quản lý loại món ăn</a>
-                <a href="{{ route('manager.dish') }}" class="list-group-item list-group-item-action @yield('nav-link-dish')"><i class="far fa-soup"></i> Món ăn</a>
-                <a href="{{ route('manager.ticket') }}" class="list-group-item list-group-item-action @yield('nav-link-ticket')"><i class="fas fa-ticket-alt"></i> Vé Buffet</a>
+                <a href="{{ route('manager.dish') }}" class="list-group-item list-group-item-action @yield('nav-link-dish')"><i class="far fa-soup"></i> Quản lý món ăn</a>
+                <a href="{{ route('manager.ticket') }}" class="list-group-item list-group-item-action @yield('nav-link-ticket')"><i class="fas fa-ticket-alt"></i> Quản lý vé Buffet</a>
+                <a href="{{ route('manager.table') }}" class="list-group-item list-group-item-action @yield('nav-link-table')"><i class="fal fa-table"></i> Quản lý bàn ăn</a>
             </div>
         </div>
         <div id="content">
@@ -64,7 +65,6 @@
         </div>
     </div>
     <script src="{{asset('resources/js/master/clock.js')}}"></script>
-    {{-- <script src="{{asset('resources/js/master/serial.js')}}"></script> --}}
 </body>
 
 </html>
