@@ -39,14 +39,41 @@
             </div>
             <div class="areaTables">
                 @foreach($getTables as $table)
-                <a href="{{ route('staff.order',['id' => $table['id']]) }}" style="text-decoration:none;">
-                    @if ($table->status == 'trống')
+                @if($table->status == 'trống')
+                    <a href="#" style="text-decoration:none;" data-bs-toggle="modal" data-bs-target="#handleAvailable">
                         <p id="nameTable" style="color: #04ff00">{{ $table->nameTable }}</p>
-                    @elseif($table->status == 'có khách')
-                        <p id="nameTable" style="color: #ff0000">{{ $table->nameTable }}</p>
-                    @endif
-                    <img src="{{asset('resources/images/sell/table.png')}}" alt="table" height="100" width="150">
-                </a>
+                        <img src="{{asset('resources/images/sell/table.png')}}" alt="table" height="100" width="150">
+                    </a>
+                    <div class="modal fade" id="handleAvailable" tabindex="-1" aria-labelledby="examplehandleAvailableLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="examplehandleAvailableLabel">Chọn mức vé Buffet</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                            Nội dung của modal.
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                @else
+                    <a href="{{ route('staff.order',['id' => $table['id']]) }}" style="text-decoration:none;">
+                        @if($table->status == 'có khách')
+                            <p id="nameTable" style="color: #F44336">{{ $table->nameTable }}</p>
+                        @elseif($table->status == 'chờ thanh toán')
+                            <p id="nameTable" style="color: #FF9800">{{ $table->nameTable }}</p>
+                        @elseif($table->status == 'đặt trước')
+                            <p id="nameTable" style="color: #FFC107">{{ $table->nameTable }}</p>
+                        @elseif($table->status == 'bảo trì')
+                            <p id="nameTable" style="color: #9E9E9E">{{ $table->nameTable }}</p>
+                        @endif
+                        <img src="{{asset('resources/images/sell/table.png')}}" alt="table" height="100" width="150">
+                    </a>
+                @endif
                 @endforeach
             </div>
         </div>
