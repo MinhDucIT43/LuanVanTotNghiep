@@ -64,9 +64,15 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
             Route::group(['prefix' => 'table'], function () {
                 /*Manager Table*/
                 Route::get('/', [ManagerController::class, 'getTable'])->name('manager.table');
+                Route::post('addTable', [ManagerController::class, 'addTable'])->name('manager.addTable');
+                Route::put('updateTable/{id}', [ManagerController::class, 'updateTable'])->name('manager.updateTable');
+                Route::get('deleteTable/{id}', [ManagerController::class, 'deleteTable'])->name('manager.deleteTable');
             });
         });
         /*Staffs*/
-        Route::get('staff/index', [StaffController::class, 'index'])->name('staff.index');
+        Route::group(['prefix' => 'manager'], function () {
+            Route::get('index', [StaffController::class, 'index'])->name('staff.index');
+            Route::get('order/table/{id}', [StaffController::class, 'order'])->name('staff.order');
+        });
     });
 });

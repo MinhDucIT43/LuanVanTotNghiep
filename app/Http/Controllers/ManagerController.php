@@ -7,11 +7,13 @@ use App\Models\staffs;
 use App\Models\typeofdish;
 use App\Models\dish;
 use App\Models\tickets;
+use App\Models\tables;
 
 use App\Http\Requests\PositionRequest;
 use App\Http\Requests\StaffRequest;
 use App\Http\Requests\TypeOfDishRequest;
 use App\Http\Requests\DishRequest;
+use App\Http\Requests\TableRequest;
 use App\Http\Requests\TicketRequest;
 use Carbon\Carbon;
 
@@ -228,6 +230,36 @@ class ManagerController extends Controller
     // Manager Tables
     public function getTable()
     {
-        return view('manager.table.index');
+        $getTables = tables::orderBy('id', 'desc')->simplePaginate(10);
+        return view('manager.table.index', compact('getTables'));
+    }
+
+    public function addTable(TableRequest $request)
+    {
+        $table = new tables();
+        $table->nameTable = $request->nameTable;
+        $table->status = $request->status;
+        $table->note = $request->note;
+        $table->created_at = Carbon::now('Asia/Ho_Chi_Minh');
+        $table->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
+        $table->save();
+        return redirect()->back()->with('success', 'Thêm bàn ăn thành công!');
+    }
+
+    public function updateTable(TableRequest $request, $id)
+    {
+        tables::where('id', $id)->update([
+            'nameTable' => $request->nameTable,
+            'status' => $request->status,
+            'note' => $request->note,
+            'updated_at' => Carbon::now('Asia/Ho_Chi_Minh'),
+        ]);
+        return redirect()->back()->with('success', 'Cập nhật thành công!');
+    }
+
+    public function deleteTable($id)
+    {
+        tables::where('id', $id)->delete();
+        return redirect()->back()->with('success', 'Xóa bàn ăn thành công!');
     }
 }

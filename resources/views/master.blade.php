@@ -23,10 +23,10 @@
 <body>
     <div id="wrapper">
         <div id="header">
+            <div id="clock"></div>
             <div id="btn-logout">
                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-power-off"></i></button>
             </div>
-            <div id="clock"></div>
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">

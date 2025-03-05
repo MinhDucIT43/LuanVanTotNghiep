@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tables', function (Blueprint $table) {
             $table->id();
             $table->string('nameTable',50);
-            $table->string('status',30)->default('trống');
+            $table->string('status',30);
             $table->string('note',100)->nullable();
             $table->timestamps();
         });
