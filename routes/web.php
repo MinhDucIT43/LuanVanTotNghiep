@@ -70,9 +70,10 @@ Route::group(['middleware' => 'prevent-back-history'], function () {
             });
         });
         /*Staffs*/
-        Route::group(['prefix' => 'manager'], function () {
+        Route::group(['prefix' => 'staff'], function () {
             Route::get('index', [StaffController::class, 'index'])->name('staff.index');
-            Route::get('order/table/{id}', [StaffController::class, 'order'])->name('staff.order');
+            Route::get('selectTable/{id}', [StaffController::class, 'selectTable'])->name('staff.selectTable');
+            Route::post('selectTable/selectTicketPrice/{id}', [StaffController::class, 'selectTicketPrice'])->name('staff.selectTable.selectTicketPrice');
         });
     });
 });

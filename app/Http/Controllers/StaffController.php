@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SelectTicketPriceRequest;
 use App\Models\tables;
+use App\Models\tickets;
+
+use Illuminate\Http\Request;
 
 class StaffController extends Controller
 {
@@ -11,13 +15,9 @@ class StaffController extends Controller
         return view('staff.index', compact('getTables'));
     }
 
-    public function order($id){
+    public function selectTable($id){
         $table = tables::find($id);
         switch($table->status){
-            case 'trống':
-                $this->handleAvailable($table);
-                break;
-
             case 'có khách':
                 $this->handleOccupied($table);
                 break;
@@ -36,9 +36,11 @@ class StaffController extends Controller
         }
     }
 
-    private function handleAvailable($table)
-    {
-        dd('chọn vé trước');
+    public function selectTicketPrice($id, SelectTicketPriceRequest $request){
+        $table = tables::find($id);
+        $SelectedTicketPrice = tickets::where('id',$request->ticketPrice)->get();
+        $quantity = $request->quantity;
+        return view('staff.orderdetails.orderdetails', compact('table','SelectedTicketPrice','quantity'));
     }
 
     private function handleOccupied($table)
