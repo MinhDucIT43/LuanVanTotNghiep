@@ -1,0 +1,43 @@
+.header{
+    height: 38px;
+    background-color: #0096c7;
+}
+.return{
+    position: relative;
+    top: 2px;
+    color: black;
+}
+#clock{
+    position: absolute;
+    top: 1%;
+    display: inline;
+    font-weight: bold;
+    color: aliceblue;
+}
+#inf-staff{
+    position: relative;
+    float: right;
+    top: 15%;
+    right: 1%;
+    color: aliceblue;
+}
+
+/* CSS của phần Content */
+.selected{
+    width: 35%;
+    height: auto;
+    float: left;
+}
+.menus{
+    width: 65%;
+    height: auto;
+    float: right;
+}
+.nav-link {
+    color: black !important;
+}
+.nav-link.active {
+    color: aliceblue !important; /* Đổi màu chữ */
+    background-color: #0096c7 !important; /* Đổi màu nền nếu muốn */
+    font-weight: bold; /* In đậm */
+}
